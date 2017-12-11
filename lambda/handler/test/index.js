@@ -48,13 +48,6 @@ var runResponse=function(params, msg, type, test, successmatch, position, succes
 }
 
 module.exports={
-    bot_status:function(test){
-        var params={
-            Command:"BOT_STATUS",
-            botname:"bot"
-        }
-        run(params,test)
-    },
     utterances:function(test){
         var params={
             Command:"UTTERANCES",
@@ -165,14 +158,6 @@ module.exports={
         }
         run(params,test)
     },
-    
-    ping:function(test){
-        var params={
-            Command:"PING"
-        }
-        run(params,test)
-    },
-
   /* http in markdown */
     linkParsing1:function(test){
         var params={

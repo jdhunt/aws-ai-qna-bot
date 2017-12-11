@@ -1,6 +1,9 @@
 {
-    "Command":"BOT_STATUS",
-    "botname":"$stageVariables.BotName"
+    "fnc":"getBot",
+    "params":{
+        "name":"$stageVariables.BotName",
+        "versionOrAlias":"\$LATEST"
+    }
 }                
-                
+               
 

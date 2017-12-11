@@ -25,7 +25,8 @@ base.Resources=Object.assign(
     require('./cfn'),
     require('./s3'),
     require('./var'),
-    require('./proxy-es')
+    require('./proxy-es'),
+    require('./proxy-lex')
 )
 
 module.exports=base

@@ -17,6 +17,7 @@ module.exports={
     authorization:"AWS_IAM",
     method:"get",
     template:fs.readFileSync(__dirname+'/templates/bot.get.vm','utf8'),
+    lambda:{"Fn::GetAtt":["LexProxyLambda","Arn"]},
     resource:{"Ref":"Bot"},
     responseTemplate:fs.readFileSync(__dirname+'/templates/bot.get.resp.vm','utf8')
 }),
