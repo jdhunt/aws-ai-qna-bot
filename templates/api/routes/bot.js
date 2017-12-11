@@ -24,7 +24,9 @@ module.exports={
 "UtterancesGet":lambda({
     authorization:"AWS_IAM",
     method:"get",
+    lambda:{"Fn::GetAtt":["LexProxyLambda","Arn"]},
     template:fs.readFileSync(__dirname+'/templates/utterance.get.vm','utf8'),
+    responseTemplate:fs.readFileSync(__dirname+'/templates/utterance.get.resp.vm','utf8'),
     resource:{"Ref":"UtterancesApi"}
 }),
 "BotDoc":{
