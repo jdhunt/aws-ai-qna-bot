@@ -7,7 +7,10 @@
             v-list-tile-title.title Pages
       v-divider
       v-list(dense three-line subheader)
-        v-list-tile(v-for="page in pages" @click="" :href="page.href") 
+        v-list-tile(v-for="page in pages" 
+          @click="" 
+          :href="page.href"
+          :target="page.target || '_self'") 
           v-list-tile-avatar
             v-icon(color="primary") {{page.icon}}
           v-list-tile-content
@@ -84,6 +87,7 @@ module.exports={
         title:"QnABot Client",
         subTitle:"Use QnABot to interact with your bot in the browser",
         icon:"forum",
+        target:'_blank',
         href:_.get(this,"$store.state.info._links.ClientLogin.href")
       }]
     }
