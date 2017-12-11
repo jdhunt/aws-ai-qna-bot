@@ -9,6 +9,7 @@ module.exports={
         "SlotType":"slot",
         "Intent":"intent",
         "LambdaArn":"ar",
+        "ESEndpoint":"test",
         "Id":"id"
     },
     util:{

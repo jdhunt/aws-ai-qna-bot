@@ -84,6 +84,9 @@ function stage(name){
             "SlotType":{"Ref":"SlotType"},
             "Intent":{"Ref":"Intent"},
             "LambdaArn":{"Ref":"HandlerArn"},
+            "ESEndpoint":{"Ref":"ESAddress"},
+            "ESIndex":{"Ref":"ESIndex"},
+            "ESType": {"Ref":"ESType"},
             "DesignerLoginUrl":{"Fn::Join":["",[
                 {"Fn::GetAtt":["ApiUrl","Name"]},
                 "/pages/designer"

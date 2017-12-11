@@ -24,7 +24,8 @@ base.Resources=Object.assign(
     require('./cognito'),
     require('./cfn'),
     require('./s3'),
-    require('./var')
+    require('./var'),
+    require('./proxy-es')
 )
 
 module.exports=base

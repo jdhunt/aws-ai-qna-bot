@@ -1,0 +1,33 @@
+module.exports={
+    qid:{
+        type:"keyword"
+    },
+    q:{
+        type:"text",
+        analyzer:"english"
+    },
+    a:{
+        type:"text",
+        analyzer:"english"
+    },
+    t:{
+        type:'text',
+        analyzer:"whitespace" 
+    },
+    r:{properties:{
+        attachmentLinkUrl:{type:"keyword"},
+        buttons:{properties:{
+            text:{type:"text"},
+            value:{type:"keyword"}
+        }},
+        imageUrl:{type:"keyword"},
+        subTitle:{type:"text"},
+        title:{type:"text"}
+    }},
+    l:{
+        properties:{
+            Arn:{type:"keyword"}
+        }
+    }
+}
+                

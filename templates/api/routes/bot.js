@@ -9,7 +9,9 @@ module.exports={
     authorization:"AWS_IAM",
     method:"post",
     template:fs.readFileSync(__dirname+'/templates/bot.post.vm','utf8'),
-    resource:{"Ref":"Bot"}
+    resource:{"Ref":"Bot"},
+    parameterNames:{"integration.request.header.X-Amz-Invocation-Type":"'Event'"},
+    responseTemplate:fs.readFileSync(__dirname+'/templates/bot.post.resp.vm','utf8')
 }),
 "BotGet":lambda({
     authorization:"AWS_IAM",

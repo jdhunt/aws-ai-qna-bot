@@ -84,6 +84,18 @@
     },
     "BootstrapPrefix":{
         "Type":"String"
+    },
+    "ESAddress": {
+      "Type": "String"
+    },
+    "ESDomainArn": {
+      "Type": "String"
+    },
+    "ESIndex": {
+      "Type": "String"
+    },
+    "ESType": {
+      "Type": "String"
     }
   },
   "Conditions":{

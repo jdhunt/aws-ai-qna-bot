@@ -15,7 +15,7 @@ var lambda=require('../bin/lambda.js')
 var response=require('../lib/response')
 var path=require('path')
 var api_params=require('./params/api.json')
-
+var env=require('../../../bin/exports')()
 var run=function(params,test){
     return lambda(params)
         .tap(msg=>console.log(JSON.stringify(msg)))
@@ -147,11 +147,16 @@ module.exports={
         }
         run(params,test)
     },
-    save:function(test){
-        var params={
-            Command:"SAVE"
-        }
-        run(params,test)
+    build:function(test){
+        env.then(function(envs){
+            var params={
+                Command:"BUILD",
+                botname:envs["QNA-DEV-BOT"],
+                slottype:env["QNA-DEV-SLOTTYPE"],
+                intent:env["QNA-DEV-INTENT"]
+            }
+            run(params,test)
+        })
     },
     rm:function(test){
         var params={

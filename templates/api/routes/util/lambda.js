@@ -18,7 +18,7 @@ module.exports=function(params){
                 "arn:aws:apigateway:",
                 {"Ref": "AWS::Region"},
                 ":lambda:path/2015-03-31/functions/",
-                {"Ref":"HandlerArn"},
+                params.lambda || {"Ref":"HandlerArn"},
                 "/invocations"
             ]]
           },
@@ -30,7 +30,7 @@ module.exports=function(params){
                     "application/json":params.responseTemplate
                 }
             },
-            {"SelectionPattern":".*error.*","StatusCode": 404}
+            {   "SelectionPattern":".*error.*","StatusCode": 404}
           ],
           "RequestParameters":params.parameterNames,
           "RequestTemplates": {

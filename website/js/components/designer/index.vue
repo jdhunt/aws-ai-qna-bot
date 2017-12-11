@@ -3,7 +3,7 @@
     v-tabs(v-model="tab")
       v-tabs-bar(:v-model="active" class="primary" light)
         v-tabs-item.title(ripple href="#questions") Questions
-        v-tabs-item.title(ripple href="#test") Simulate
+        v-tabs-item.title(ripple href="#test") Test
         v-tabs-slider(color="accent")
       v-tabs-items
         v-tabs-content(id="questions")
@@ -87,13 +87,13 @@ module.exports={
       sortBy:'qid'
     },
     headers:[{
-      text:'qid',
+      text:'Id',
       value:'qid',
       align:'left',
       sortable:true
     },
     {
-      text:'question',
+      text:'First Question',
       value:'q[0]',
       align:'left'
     }]

@@ -6,8 +6,9 @@ module.exports={
     "Health": resource('health'),
     "HealthGet":lambda({
         method:'get',
-        lambda:{"Ref": "HandlerArn"},
+        lambda:{"Fn::GetAtt":["ESProxyLambda","Arn"]},
         template:fs.readFileSync(__dirname+"/templates/health.vm",'utf8'),
+        responseTemplate:fs.readFileSync(__dirname+'/templates/health.resp.vm','utf8'),
         resource:{"Ref":'Health'}
     })
 }

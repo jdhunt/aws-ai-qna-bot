@@ -3,11 +3,15 @@ process.argv.push('--debug')
 var Velocity=require('velocity')
 
 module.exports={
-    health:test=>run("health",{},test),
+    health:{
+        get:test=>run("health",{},test),
+        resp:test=>run("health.resp",{},test),
+    },
     info:test=>run("info",{},test),
     bot:{
         get:test=>run("bot.get",{},test),
         post:test=>run("bot.post",{},test),
+        resp:test=>run("bot.post.resp",{},test),
     },
     qa:{
         head:test=>run("qa.head",{

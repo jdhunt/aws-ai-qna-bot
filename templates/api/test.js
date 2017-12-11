@@ -11,7 +11,11 @@ module.exports={
         "Email":config.devEmail,
         "Utterances":"ad",
         "PublicOrPrivate":"PRIVATE",
-        "ApprovedDomain":"amazon.com"
+        "ApprovedDomain":"amazon.com",
+        "ESAddress":{"Fn::ImportValue":"QNA-DEV-ES-ADDRESS"},
+        "ESDomainArn":{"Fn::ImportValue":"QNA-DEV-ES-ARN"},
+        "ESType":"test-type",
+        "ESIndex":"test-index"
     }),
 	"lambda": {
       "Type": "AWS::Lambda::Function",

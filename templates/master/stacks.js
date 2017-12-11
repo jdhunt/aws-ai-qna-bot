@@ -21,7 +21,11 @@ module.exports={
         "ApprovedDomain":{"Ref":"ApprovedDomain"},
         "Utterances":{"Fn::Join":["\n",
             require('../../lambda/handler/lib/default-utterances')
-        ]}
+        ]},
+        "ESAddress":  get('domain','ESAddress'),
+        "ESDomainArn":get("domain","ESArn"),
+        "ESType":     get("domain","Type"),
+        "ESIndex":    get("domain","Index")
     }),
     "dashboard":stack('dashboard',{
         "Name":{"Ref":"AWS::StackName"},

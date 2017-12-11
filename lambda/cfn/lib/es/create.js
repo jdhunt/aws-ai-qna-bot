@@ -12,7 +12,7 @@ License for the specific language governing permissions and limitations under th
 */
 
 
-module.exports=function(index,type,address){
+module.exports=function(index,type,name,address){
     var con=(require('./con.js'))(address)
     
     return con.tap(function(es){
@@ -29,39 +29,16 @@ module.exports=function(index,type,address){
     .tap(function(es){
         return es.indices.existsType({
             index:index,
-            type:type
+            type:name
         })
         .tap(console.log)
         .tap(function(exists){ 
             var body={}
             if(!exists){
-                body[type]={
-                    properties:{
-                        qid:{type:"keyword"},
-                        q:{
-                            type:"text",
-                            analyzer:"english"
-                        },
-                        a:{
-                            type:"text",
-                            analyzer:"english"
-                        },
-                        r:{properties:{
-                            attachmentLinkUrl:{type:"keyword"},
-                            buttons:{properties:{
-                                text:{type:"text"},
-                                value:{type:"keyword"}
-                            }},
-                            imageUrl:{type:"keyword"},
-                            subTitle:{type:"text"},
-                            title:{type:"text"}
-                        }}
-                    }
-                }
                 return es.indices.putMapping({
                     index:index,
-                    type:type,
-                    body:body
+                    type:name,
+                    body:type
                 })
             }
         })
