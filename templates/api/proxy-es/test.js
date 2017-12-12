@@ -6,7 +6,12 @@ env.then(function(envs){
     
 handler({
     endpoint:envs["QNA-DEV-ES-ADDRESS"],
-    method:'GET',
-    path:"/_cluster/health"
+    method:'POST',
+    path:"/_cluster/health",
+    body:{
+        "query" : {
+            "term" : { "qid" : "zombie" }
+        }
+    }
 },{done:console.log},console.log)
 })

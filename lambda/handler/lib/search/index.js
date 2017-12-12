@@ -49,35 +49,19 @@ module.exports=function(params,es){
     })
     .tap(response=>console.log("elasticsearch response",JSON.stringify(response,null,2)))
     .get("hits")
-    .then(function(result){
-        if(result.hits){
-            return {
-                qa:result.hits.map(qa=>{return {
-                        id:qa._id,
-                        score:qa._score,
-                        body:qa._source
-                    }
-                }),
-                total:result.total
-            }
-        }
-    })
     .then(function(results){
-        if(process.env.TYPE==="API"){
-            return results
+        if(results.hits.length>0){
+            var result=results.hits.hits[0]
+            return  {
+                'msg':result.body.a,
+                'question':params.Query,
+                'r':result.r,
+                't':result.t
+            }
         }else{
-            if(results.qa.length>0){
-                return  {
-                    'msg':results.qa[0].body.a,
-                    'question':params.Query,
-                    'r':results.qa[0].body.r,
-                    't':results.qa[0].body.t
-                }
-            }else{
-                return  {
-                    'msg':process.env.EMPTYMESSAGE,
-                    'question':params.Query
-                }
+            return  {
+                'msg':process.env.EMPTYMESSAGE,
+                'question':params.Query
             }
         }
     })

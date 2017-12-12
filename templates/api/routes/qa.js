@@ -7,14 +7,17 @@ module.exports={
 "QuestionsGet":lambda({
     authorization:"AWS_IAM",
     method:"get",
+    lambda:{"Fn::GetAtt":["ESProxyLambda","Arn"]},
     template:fs.readFileSync(__dirname+'/templates/qa.get.vm','utf8'),
+    responseTemplate:fs.readFileSync(__dirname+'/templates/qa.get.resp.vm','utf8'),
     resource:{"Ref":"Questions"},
     parameterLocations:{
       "method.request.querystring.query": false,
       "method.request.querystring.topic": false,
       "method.request.querystring.from": false,
       "method.request.querystring.filter":false,
-      "method.request.querystring.order":false
+      "method.request.querystring.order":false,
+      "method.request.querystring.perpage":false,
     }
 }),
 "QuestionsPut":lambda({

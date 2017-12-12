@@ -11,7 +11,7 @@ exports.handler = (event, context, callback) => {
     req.path = event.path
     req.region =aws.config.region;
     if(event.body){
-        req.body = event.body
+        req.body = JSON.stringify(event.body)
     }
     req.headers['presigned-expires'] = false;
     req.headers['Host'] = endpoint.host;
@@ -30,7 +30,7 @@ exports.handler = (event, context, callback) => {
             });
             httpResp.on('end', function (chunk) {
                 console.log("Response:" +JSON.stringify(JSON.parse(body),null,2))
-                callback(null,body)
+                callback(null,JSON.parse(body))
             });
         }, 
         function(err) {

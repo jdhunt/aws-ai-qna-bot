@@ -54,7 +54,7 @@ module.exports={
                     from:"",
                     filter:"",
                     query:"",
-                    perpage:"all"
+                    perpage:"0"
                 }[name]}
             }
         },test),
@@ -86,6 +86,26 @@ module.exports={
                     topic:""
                 }[name] }
             }
+        },test),
+        resp:test=>run("qa.get.resp",{
+            input:{
+            json:function(x){
+                return JSON.stringify({ "a":"1"})
+            },
+            path:function(){
+                return {
+                    hits:{
+                        total:10,
+                        hits:[{
+                            _score:10,
+                            _id:"1"
+                        },{
+                            _score:9,
+                            _id:"2"
+                        }]
+                    }
+                }
+            }}
         },test)
     }
 }
