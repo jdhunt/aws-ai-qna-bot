@@ -1,4 +1,8 @@
 {
-    "Command":"ADD",
-    "Body":$input.body
+    "endpoint":"$stageVariables.ESEndpoint",
+    "method":"PUT",
+    "path":"/$stageVariables.ESIndex/$stageVariables.ESType/$util.urlDecode($input.params('ID'))",
+    "body":$input.json('$')
 }
+
+

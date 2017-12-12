@@ -23,6 +23,7 @@ exports.parse=function(item,context){
     console.log(item)
     item.body.score=item.score || 0
     _.defaults(item.body,{
+        q:[],
         t:'',
         r:{
             title:"",

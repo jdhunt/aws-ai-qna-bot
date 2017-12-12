@@ -48,43 +48,6 @@ var runResponse=function(params, msg, type, test, successmatch, position, succes
 }
 
 module.exports={
-    utterances:function(test){
-        var params={
-            Command:"UTTERANCES",
-            botname:"bot"
-        }
-        run(params,test)
-    },
-    export:function(test){
-        var params={
-            Command:"EXPORT"
-        }
-        run(params,test)
-    },
-    list:function(test){
-        var params={
-            Command:"LIST",
-            From:0,
-            Perpage:2
-        }
-        run(params,test)
-    },
-    listFilter:function(test){
-        var params={
-            Command:"LIST",
-            From:0,
-            Filter:'te.*',
-            Perpage:2
-        }
-        run(params,test)
-    },
-    check:function(test){
-        var params={
-            Command:"CHECK",
-            ID:"someting"
-        }
-        run(params,test)
-    },
     lex:function(test){
         var params=require('./params/lex.json') 
         run(params,test)
@@ -110,36 +73,6 @@ module.exports={
         }
         run(params,test)
     },
-    update:function(test){
-        var params={
-            Command:"UPDATE",
-            Body:{
-                q:["add","who","someother"],
-                qid:"test",
-                a:"yes",
-                r:{
-                    title:"something",
-                    imageUrl:"somethingelse"
-                }
-            }
-        }
-        run(params,test)
-    },
-    add:function(test){
-        var params={
-            Command:"ADD",
-            Body:[{
-                q:["add","who","someother"],
-                qid:"test",
-                a:"yes",
-                r:{
-                    title:"something",
-                    imageUrl:"somethingelse"
-                }
-            }]
-        }
-        run(params,test)
-    },
     build:function(test){
         env.then(function(envs){
             var params={
@@ -150,13 +83,6 @@ module.exports={
             }
             run(params,test)
         })
-    },
-    rm:function(test){
-        var params={
-            Command:"DELETE",
-            ID:"test"
-        }
-        run(params,test)
     },
   /* http in markdown */
     linkParsing1:function(test){

@@ -16,32 +16,6 @@ var aws=require('./aws')
 var lex=new aws.LexModelBuildingService()
 var getUtterances=require('./utterances')
 
-var run=function(fnc,params){
-    console.log(fnc+':request:'+JSON.stringify(params,null,3))
-    return new Promise(function(res,rej){
-        var next=function(count){
-            console.log("tries-left:"+count)
-            var request=lex[fnc](params)
-            request.promise()
-            .tap(fnc+':result:'+console.log)
-            .then(res)
-            .catch(function(err){
-                console.log(fnc+':'+err.code)
-                if(err.code==="ConflictException"){
-                    count===0 ? rej("Error") : setTimeout(()=>next(--count),500)
-                }else if(err.code==="ResourceInUseException"){
-                    count===0 ? rej("Error") : setTimeout(()=>next(--count),500)
-                }else if(err.code==="LimitExceededException"){
-                    setTimeout(()=>next(count),4000)
-                }else{
-                    rej(err.code+':'+err.message)
-                }
-            })
-        }
-        next(200)
-    })
-}
-
 module.exports=function(params,es){ 
     var utterances=getUtterances(params,es)
     var slottype=run("getSlotType",{
@@ -151,4 +125,28 @@ module.exports=function(params,es){
     .return('success')
 }
 
-
+function run(fnc,params){
+    console.log(fnc+':request:'+JSON.stringify(params,null,3))
+    return new Promise(function(res,rej){
+        var next=function(count){
+            console.log("tries-left:"+count)
+            var request=lex[fnc](params)
+            request.promise()
+            .tap(fnc+':result:'+console.log)
+            .then(res)
+            .catch(function(err){
+                console.log(fnc+':'+err.code)
+                if(err.code==="ConflictException"){
+                    count===0 ? rej("Error") : setTimeout(()=>next(--count),500)
+                }else if(err.code==="ResourceInUseException"){
+                    count===0 ? rej("Error") : setTimeout(()=>next(--count),500)
+                }else if(err.code==="LimitExceededException"){
+                    setTimeout(()=>next(count),4000)
+                }else{
+                    rej(err.code+':'+err.message)
+                }
+            })
+        }
+        next(200)
+    })
+}

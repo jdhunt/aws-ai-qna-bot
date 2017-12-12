@@ -140,6 +140,7 @@ module.exports={
         }
       })
       .then(()=>self.success="success!")
+      .tapCatch(console.log)
       .catch(error=>self.error=error)
     },
   }

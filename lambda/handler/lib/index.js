@@ -12,8 +12,5 @@ License for the specific language governing permissions and limitations under th
 */
 
 exports.SEARCH=require('./search.js')
-exports.ADD=require('./add.js')
-exports.DELETE=require('./delete.js')
-exports.CHECK=require('./check.js')
 exports.BUILD=require('./build.js')
 exports.ALEXA=require('./alexa.js')

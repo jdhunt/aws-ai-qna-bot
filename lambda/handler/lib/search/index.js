@@ -11,41 +11,34 @@ BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, express or implied. See the
 License for the specific language governing permissions and limitations under the License.
 */
 var _=require('lodash')
-var size=10
 
 module.exports=function(params,es){
-    var index=parseInt(params.From)*size
-    console.log(index)
-    
-    var body={
-        size:params.Perpage || size,
-        from:index || 0,
-        query: {
-          bool: {
-            should: [
-              {
-	            multi_match: {
-	                query: _.get(params,"Session.TopicContext") || params.Topic || "",
-	                fields : ["t"]
-	            }
-	          },
-	          {                  
-	            multi_match: {
-	                query:params.Query,
-	                fields : ["q^2","a"]
-	            }
-	          }
-	        ]
-	      }
-        }
-    }
-
-    console.log(JSON.stringify(body,null,4))
     return es.search({
         index: process.env.ES_INDEX,
         type: process.env.ES_TYPE,
         searchType:"dfs_query_then_fetch",
-        body
+        body:{
+            size:10,
+            from:0,
+            query: {
+              bool: {
+                should: [
+                  {
+                    multi_match: {
+                        query: _.get(params,"Session.TopicContext",""),
+                        fields : ["t"]
+                    }
+                  },
+                  {                  
+                    multi_match: {
+                        query:params.Query,
+                        fields : ["q^2","a"]
+                    }
+                  }
+                ]
+              }
+            }
+        }
     })
     .tap(response=>console.log("elasticsearch response",JSON.stringify(response,null,2)))
     .get("hits")

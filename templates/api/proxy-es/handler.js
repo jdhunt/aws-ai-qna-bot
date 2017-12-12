@@ -11,7 +11,11 @@ exports.handler = (event, context, callback) => {
     req.path = event.path
     req.region =aws.config.region;
     if(event.body){
-        req.body = JSON.stringify(event.body)
+        if(Array.isArray(event.body)){
+            req.body=event.body.map(JSON.stringify).join('\n')
+        }else{
+            req.body = JSON.stringify(event.body)
+        }
     }
     req.headers['presigned-expires'] = false;
     req.headers['Host'] = endpoint.host;
@@ -29,13 +33,29 @@ exports.handler = (event, context, callback) => {
                 body += chunk;
             });
             httpResp.on('end', function (chunk) {
-                console.log("Response:" +JSON.stringify(JSON.parse(body),null,2))
-                callback(null,JSON.parse(body))
+                respond(httpResp,body,callback)
+                
             });
         }, 
         function(err) {
             console.log('Error: ' + err);
-            callback(err);
+            callback("Error: "+err);
         }
     );
+}
+
+function respond(httpResp,body,callback){
+    var status=httpResp.statusCode.toString()
+    console.log("status:"+status)
+    if(status.match(/2../)){
+        console.log("Response:" + body)
+        try{
+            var out=JSON.parse(body)
+            callback(null,out)
+        }catch(e){
+            callback(null,out)
+        }
+    }else{
+        callback("Error:"+status)
+    }
 }

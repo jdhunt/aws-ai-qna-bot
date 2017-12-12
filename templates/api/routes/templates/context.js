@@ -10,6 +10,8 @@ module.exports={
         "Intent":"intent",
         "LambdaArn":"ar",
         "ESEndpoint":"test",
+        "ESIndex":"index",
+        "ESType":"type",
         "Id":"id"
     },
     util:{

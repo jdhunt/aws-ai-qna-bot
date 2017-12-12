@@ -113,7 +113,7 @@ module.exports={
           }else{
             return self.$store.dispatch('data/add',Object.assign({},self.data))
             .tap(()=>self.success='Success!')
-            .map(x=>self.$store.commit('data/addQA',x))
+            .then(()=>self.$store.commit('data/addQA',Object.assign({},self.data)))
           }
         })
         .catch(error=>self.error=error)

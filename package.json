@@ -22,7 +22,7 @@
     "check": "./bin/check.sh",
     "stack": "./bin/launch.sh",
     "upload": "make upload -j 4",
-    "bootstrap":"make config.js && make templates && npm run stack dev/bootstrap up",
+    "bootstrap": "make config.js && make templates && npm run stack dev/bootstrap up",
     "dev-up": "npm run stack dev/dev up",
     "up": "npm run upload && npm run stack test/master up",
     "lambda-update": "make lambda && ./bin/update-lambda.sh",
@@ -39,6 +39,7 @@
   },
   "homepage": "https://github.com/awslabs/aws-ai-qna-bot#readme",
   "dependencies": {
+    "JSONPath": "^0.11.2",
     "ajax-promise": "^0.8.1",
     "amazon-cognito-identity-js": "^1.19.0",
     "autosize": "^3.0.21",

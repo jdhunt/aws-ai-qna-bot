@@ -1,6 +1,7 @@
 var fs=require('fs')
 process.argv.push('--debug')
 var Velocity=require('velocity')
+var JSONPath = require('JSONPath');
 
 module.exports={
     health:{
@@ -30,21 +31,113 @@ module.exports={
         }
     },
     qa:{
-        head:test=>run("qa.head",{
-            input:{
-                params:()=>'id'
+        head:{
+            send:test=>run("qa.head",{
+                input:{
+                    params:()=>'id'
+                }
+            },test),
+            resp:test=>run("qa.head.resp",{
+                input:{
+                    params:()=>'id'
+                }
+            },test)
+        },
+        delete:{
+            send:test=>run("qa.delete",{
+                input:{
+                    params:()=>'id'
+                }
+            },test),
+            resp:function(test){
+                var body={
+                    "_shards":{
+                        successful:2
+                    },
+                    "_id":2,
+                    result:"delete"
+                }
+                run("qa.delete.resp",{
+                    input:{
+                        path:(x)=>{
+                            return JSONPath({json:body,path:x})[0]
+                        },
+                        json:(x)=>{
+                            return JSON.stringify(JSONPath({json:body,path:x})[0])
+                        }
+                    }
+                },test)
             }
-        },test),
-        delete:test=>run("qa.delete",{
-            input:{
-                params:()=>'id'
+        },
+        put:{
+            send:test=>run("qa.put",{
+                input:{
+                    params:()=>'id',
+                    json:()=>JSON.stringify({a:1})
+                }
+            },test),
+            resp:function(test){
+                var body={
+                    "_shards":{
+                        successful:2
+                    },
+                    "_id":2,
+                    result:"created"
+                }
+                run("qa.put.resp",{
+                    input:{
+                        path:(x)=>{
+                            return JSONPath({json:body,path:x})[0]
+                        },
+                        json:(x)=>{
+                            return JSON.stringify(JSONPath({json:body,path:x})[0])
+                        }
+                    }
+                },test)
             }
-        },test),
-        put:test=>run("qa.put",{
-            input:{
-                body:'{}'
+        },
+        puts:{
+            resp:function(test){
+                var body={
+                    took:30,
+                    errors:false,
+                    items:[{
+                        index:{
+                            status:200,
+                            _id:1
+                        }
+                    },{
+                        index:{
+                            status:200,
+                            _id:2
+                        }
+                    }]
+                }
+                run("qas.put.resp",{
+                    input:{
+                        path:(x)=>{
+                            return JSONPath({json:body,path:x})[0]
+                        },
+                        json:(x)=>{
+                            return JSON.stringify(JSONPath({json:body,path:x})[0])
+                        }
+                    }
+                },test)
+            },
+            send:function(test){
+                var body=[{qid:3,a:1},{qid:2,a:2}]
+                run("qas.put",{
+                    input:{
+                        path:(x)=>{
+                            return JSONPath({json:body,path:x})[0]
+                        },
+                        json:(x)=>{
+                            return JSON.stringify(JSONPath({json:body,path:x})[0])
+                        }
+                    }
+                },test)
             }
-        },test)
+        }
     },
     root:{
         get:test=>run("qa.get",{

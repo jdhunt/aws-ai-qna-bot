@@ -1,4 +1,7 @@
 {
-    "Command":"CHECK",
-    "ID":"$util.urlDecode($input.params('ID'))"
+    "endpoint":"$stageVariables.ESEndpoint",
+    "method":"HEAD",
+    "path":"/$stageVariables.ESIndex/$stageVariables.ESType/$util.urlDecode($input.params('ID'))"
 }
+
+
