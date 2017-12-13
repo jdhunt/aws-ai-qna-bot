@@ -9,6 +9,7 @@ module.exports={
     authorization:"AWS_IAM",
     method:"post",
     template:fs.readFileSync(__dirname+'/templates/bot.post.vm','utf8'),
+    lambda:{"Fn::GetAtt":["LexBuildLambda","Arn"]},
     resource:{"Ref":"Bot"},
     parameterNames:{"integration.request.header.X-Amz-Invocation-Type":"'Event'"},
     responseTemplate:fs.readFileSync(__dirname+'/templates/bot.post.resp.vm','utf8')

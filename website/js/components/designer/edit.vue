@@ -11,8 +11,9 @@
           v-spacer
             v-btn(@click='cancel' flat) close
     v-dialog(v-model='dialog' max-width="80%")
-      v-btn(slot="activator" block icon="icon" @click="refresh") 
+      v-btn(v-if="!label" slot="activator" block icon="icon" @click="refresh") 
         v-icon edit
+      v-btn(v-if="label" slot="activator" @click="refresh") {{label}}
       v-card
         v-card-title(primary-title)
           .headline Update: {{data.qid}}
@@ -97,7 +98,7 @@ var saveAs=require('file-saver').saveAs
 var Promise=require('bluebird')
 var _=require('lodash')
 module.exports={
-  props:['data'],
+  props:['data','label'],
   data:function(){
     return {
       error:'',

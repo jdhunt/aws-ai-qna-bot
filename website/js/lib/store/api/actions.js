@@ -66,6 +66,10 @@ module.exports={
             }
             return Promise.reject()
         })
+        .catch(error=>Promise.reject({
+            response:error.response.data,
+            status:error.response.status
+        }))
         .get('data')
         .tap(()=>context.commit('loading',false))
     },

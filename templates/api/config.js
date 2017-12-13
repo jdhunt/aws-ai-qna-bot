@@ -5,7 +5,7 @@ module.exports={
     "Name": {"Ref": "AWS::StackName"},
     "Description":"An Api interface for the admin actions on the QNA bot"
   },
-  "DependsOn": ["InvokePermissionHandler","InvokePermissionESProxy","InvokePermissionLexProxy" ]
+  "DependsOn": ["InvokePermissionESProxy","InvokePermissionLexProxy","InvokePermissionLexBuild" ]
 },
 "Deployment": {
   "Type": "AWS::ApiGateway::Deployment",
@@ -83,7 +83,6 @@ function stage(name){
             "BotName":{"Ref":"Botname"},
             "SlotType":{"Ref":"SlotType"},
             "Intent":{"Ref":"Intent"},
-            "LambdaArn":{"Ref":"HandlerArn"},
             "ESEndpoint":{"Ref":"ESAddress"},
             "ESIndex":{"Ref":"ESIndex"},
             "ESType": {"Ref":"ESType"},

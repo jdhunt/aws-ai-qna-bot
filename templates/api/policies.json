@@ -178,9 +178,6 @@
               "Effect": "Allow",
               "Action": [
                 "lambda:InvokeFunction"
-              ],
-              "Resource": [
-                {"Ref": "HandlerArn"}
               ]
             }
           ]

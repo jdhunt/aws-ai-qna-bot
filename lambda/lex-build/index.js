@@ -1,4 +1,3 @@
-#! /usr/bin/env node
 /*
 Copyright 2017-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 
@@ -12,22 +11,14 @@ BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, express or implied. See the
 License for the specific language governing permissions and limitations under the License.
 */
 
-var base=require('./api.json')
+var Promise=require('bluebird')
+var lib=require('./lib')
 
-base.Resources=Object.assign(
-    require('./signup'),
-    require('./config'),
-    require('./routes'),
-    require('./lambda'),
-    require('./policies'),
-    require('./roles'),
-    require('./cognito'),
-    require('./cfn'),
-    require('./s3'),
-    require('./var'),
-    require('./proxy-es'),
-    require('./proxy-lex'),
-    require('./lex-build')
-)
+exports.handler=function(event,context,callback){
+    console.log("Event:",JSON.stringify(event,null,2))
+    
+    return lib(event).then(()=>callback(null,"success")).catch(callback)
+}
 
-module.exports=base
+
+

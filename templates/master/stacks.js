@@ -11,7 +11,6 @@ module.exports={
         "EmptyMessage":config.EmptyMessage
     }),
     "api":stack('api',{
-        "HandlerArn":get("QnABot","HandlerArn"),
         "Botname":  get("QnABot","Bot"),
         "SlotType": get("QnABot","SlotType"),
         "Intent":   get("QnABot","Intent"),
@@ -19,9 +18,6 @@ module.exports={
         "Email":{"Ref":"Email"},
         "PublicOrPrivate":{"Ref":"PublicOrPrivate"},
         "ApprovedDomain":{"Ref":"ApprovedDomain"},
-        "Utterances":{"Fn::Join":["\n",
-            require('../../lambda/handler/lib/default-utterances')
-        ]},
         "ESAddress":  get('domain','ESAddress'),
         "ESDomainArn":get("domain","ESArn"),
         "ESType":     get("domain","Type"),

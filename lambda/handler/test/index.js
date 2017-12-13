@@ -73,17 +73,6 @@ module.exports={
         }
         run(params,test)
     },
-    build:function(test){
-        env.then(function(envs){
-            var params={
-                Command:"BUILD",
-                botname:envs["QNA-DEV-BOT"],
-                slottype:env["QNA-DEV-SLOTTYPE"],
-                intent:env["QNA-DEV-INTENT"]
-            }
-            run(params,test)
-        })
-    },
   /* http in markdown */
     linkParsing1:function(test){
         var params={

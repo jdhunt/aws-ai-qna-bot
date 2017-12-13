@@ -12,5 +12,4 @@ License for the specific language governing permissions and limitations under th
 */
 
 exports.SEARCH=require('./search.js')
-exports.BUILD=require('./build.js')
 exports.ALEXA=require('./alexa.js')

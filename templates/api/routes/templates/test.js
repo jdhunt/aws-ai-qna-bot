@@ -165,6 +165,7 @@ module.exports={
         import:test=>run("qa.put",{
             input:{
                 body:'{}',
+                json:()=>'{}',
                 params:()=>'notall'
             }
         },test),

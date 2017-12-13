@@ -1,6 +1,8 @@
 {
-    "Command":"BUILD",
     "botname":"$stageVariables.BotName",
     "slottype":"$stageVariables.SlotType",
-    "intent":"$stageVariables.Intent"
+    "intent":"$stageVariables.Intent",
+    "address":"$stageVariables.ESEndpoint",
+    "index":"$stageVariables.ESIndex",
+    "type":"$stageVariables.ESType"
 }  
