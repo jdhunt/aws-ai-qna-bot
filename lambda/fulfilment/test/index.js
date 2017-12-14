@@ -24,7 +24,7 @@ var run=function(params,schema,test){
         .tap(msg=>console.log(JSON.stringify(msg)))
         .tapCatch(msg=>console.log(JSON.stringify(msg)))
         .tap(test.ok)
-        //.tap(x=>v.validate(x,schema))
+        .tap(x=>v.validate(x,schema))
         .catch(test.ifError)
         .finally(test.done)
 }
@@ -63,7 +63,7 @@ module.exports={
     lex:function(test){
         run(require('./lex/lex'),lexSchema,test)
     },
-    alex:{
+    alexa:{
         start:function(test){
             run(require('./alexa/start'),alexaSchema,test)
         },
@@ -74,7 +74,7 @@ module.exports={
             run(require('./alexa/cancel'),alexaSchema,test)
         },
         end:function(test){
-            run(require('./alexa/end'),alexaSchema,test)
+            run(require('./alexa/end'),{},test)
         }
     }
 }

@@ -9,7 +9,8 @@ module.exports={
         resp:test=>run("health.resp",{},test),
     },
     info:test=>run("info",{},test),
-    bot:{
+    bot:{   
+        alexa:test=>run("alexaschema",{},test),
         get:test=>run("bot.get",{},test),
         getresp:test=>run("bot.get.resp",{
             input:{path:function(){
@@ -23,7 +24,7 @@ module.exports={
             resp:test=>run("utterance.get.resp",{
                 input:{path:function(){
                     return { enumerationValues:[
-                        {value:"thin"},
+                        {value:"thin, or thin"},
                         {value:"thick"}
                     ]}
                 }}

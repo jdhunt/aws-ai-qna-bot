@@ -14,14 +14,23 @@ module.exports=class router {
         try {
             var request=this._request(event)
             var response=this._response(request._type,callback)
-
-            try { 
-                this._walk(request,response,this.middleware.length-1)
-            } catch(e){
-                response.send(e)
-            }
         } catch(e){
-            callback(e)
+            if( e.action==='END'){
+                callback(null,"END") 
+                return 
+            } else if(e.action==='RESPOND'){
+                callback(null,e.message) 
+                return 
+            } else {
+                callback(e)
+                return
+            }
+        } 
+        
+        try { 
+            this._walk(request,response,this.middleware.length-1)
+        } catch(e){
+            response.send(e)
         }
     }
 
@@ -40,30 +49,45 @@ module.exports=class router {
     
     _request(event){
         var type=this._type(event)
+         
         switch(type){
             case 'LEX':
-                return lex.parse(event)
+                var out=lex.parse(event)
                 break;
             case 'ALEXA':
-                return alexa.parse(event)
+                var out=alexa.parse(event)
                 break;
         }
+        out._original=event
+        return out
     }
     
     _response(type,callback){
-        var response={} 
+        var response={
+            type:"plaintext",
+            message:"",
+            card:{
+                send:false,
+                title:"",
+                text:"",
+                url:""
+            }
+        } 
         response.send=function(error){
             if(error){
                 response.message=error
             }
+            
             switch(type){
                 case 'LEX':
-                    callback(null,lex.assemble(response))
+                    var out=lex.assemble(response)
                     break;
                 case 'ALEXA':
-                    callback(null,alexa.assemble(response))
+                    var out=alexa.assemble(response)
                     break;
             }
+            //call response lambda here
+            callback(null,out)
         }
 
         response.redirect=(req,res)=>this._walk(req,res,self.middleware.length-1)
@@ -71,7 +95,7 @@ module.exports=class router {
     }
 
     _type(event){
-        return "LEX"
+        return event.version ? "ALEXA" : "LEX"
     }
 }
 
