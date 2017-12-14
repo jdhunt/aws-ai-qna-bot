@@ -18,7 +18,7 @@
               v-btn(@click='emit' class="ma-2" id="refresh") 
                 span(v-if="$store.state.data.filter.length===0") Refresh
                 span(v-if="$store.state.data.filter.length!==0") Filter
-      v-flex(text-xs-right)
+      //v-flex(text-xs-right)
         v-spacer
         add(class="ma-2")
         delete(class="ma-2")

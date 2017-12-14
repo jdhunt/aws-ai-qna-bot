@@ -1,6 +1,11 @@
 <template lang='pug'>
   v-card.root-card
     v-tabs(v-model="tab")
+      v-toolbar(color="cyan")
+        v-spacer
+        v-btn.title.test--white(flat) Add
+        v-btn.title.white--text(flat) Rebuild Lex
+        v-btn.title(flat) Update Alexa
       v-tabs-bar(:v-model="active" class="primary" light)
         v-tabs-item.title(ripple href="#questions") Questions
         v-tabs-item.title(ripple href="#test") Test
