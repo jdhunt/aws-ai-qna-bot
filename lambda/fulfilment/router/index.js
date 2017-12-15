@@ -1,6 +1,7 @@
 var Promise=require('bluebird')
 var lex=require('./lex')
 var alexa=require('./alexa')
+var es=require('./es')
 
 module.exports=class router {
     constructor(){
@@ -10,7 +11,6 @@ module.exports=class router {
     start(event,callback){
         console.log("Request:"+JSON.stringify(event,null,2))
         var self=this
-
         try {
             var request=this._request(event)
             var response=this._response(request._type,callback)
@@ -39,7 +39,7 @@ module.exports=class router {
     }
     
     _walk(req,res,index){
-        if(index>0){
+        if(index>-1){
             Promise.resolve(this.middleware[index](req,res))
             .then(()=>_walk(req,res,index--))
         }else{
@@ -59,6 +59,7 @@ module.exports=class router {
                 break;
         }
         out._original=event
+        out._query=es(out)
         return out
     }
     
@@ -86,7 +87,12 @@ module.exports=class router {
                     var out=alexa.assemble(response)
                     break;
             }
-            //call response lambda here
+            if(process.env.LAMBDA_RESPONSE){
+                //call response lambda here
+            }
+            if(process.env.LAMBDA_LOG){
+                //async call log lambda
+            }
             callback(null,out)
         }
 

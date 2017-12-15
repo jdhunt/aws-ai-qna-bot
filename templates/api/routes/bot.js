@@ -1,37 +1,17 @@
 var resource=require('./util/resource')
 var lambda=require('./util/lambda')
+var mock=require('./util/mock')
 var fs=require('fs')
 
 module.exports={
 "Bot": resource('bot'),
 "UtterancesApi": resource('utterances',{"Ref":"Bot"}),
 "AlexaApi": resource('alexa',{"Ref":"Bot"}),
-"AlexaSchemaApi": resource('alexa',{"Ref":"Bot"}),
-"AlexaSchema":{
-  "Type": "AWS::ApiGateway::Method",
-  "Properties": {
-    "AuthorizationType": "NONE",
-    "HttpMethod": "GET",
-    "Integration": {
-      "Type": "MOCK",
-      "IntegrationResponses": [{
-        "ResponseTemplates":{
-            "application/json":fs.readFileSync(
-                __dirname+"/templates/alexaSchema.vm",
-                "utf8"
-            )
-        },
-        "StatusCode":"200"
-      }],
-      "RequestTemplates": {
-        "application/json":"{\"statusCode\": 200}"
-      }
-    },
-    "ResourceId": {"Fn::GetAtt": ["API","RootResourceId"]},
-    "MethodResponses": [{"StatusCode": 200}],
-    "RestApiId":{"Ref":"API"} 
-  }
-},
+"AlexaSchema":mock({
+    method:"GET",
+    template:"alexa",
+    resource:{"Ref":"AlexaApi"}
+}),
 "BotPost":lambda({
     authorization:"AWS_IAM",
     method:"post",

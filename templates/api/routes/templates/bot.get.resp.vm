@@ -8,6 +8,9 @@
     "_links":{
         "utterances":{
             "href":"$root/bot/utterances"
+        },
+        "alexa":{
+            "href":"$root/bot/alexa"
         }
     }
 }

@@ -10,7 +10,7 @@ module.exports={
     },
     info:test=>run("info",{},test),
     bot:{   
-        alexa:test=>run("alexaschema",{},test),
+        alexa:test=>run("alexa",{},test),
         get:test=>run("bot.get",{},test),
         getresp:test=>run("bot.get.resp",{
             input:{path:function(){
@@ -71,12 +71,26 @@ module.exports={
             }
         },
         put:{
-            send:test=>run("qa.put",{
-                input:{
-                    params:()=>'id',
-                    json:()=>JSON.stringify({a:1})
+            send:function(test){
+                var body={  
+                    qid:"adad",
+                    q:["b","c"],
+                    card:{
+                        title:""
+                    }
                 }
-            },test),
+                run("qa.put",{
+                    input:{
+                        path:(x)=>{
+                            return JSONPath({json:body,path:x})[0]
+                        },
+                        json:(x)=>{
+                            return JSON.stringify(JSONPath({json:body,path:x})[0])
+                        },
+                        params:()=>"adad"
+                    }
+                },test)
+            },
             resp:function(test){
                 var body={
                     "_shards":{
@@ -182,26 +196,44 @@ module.exports={
                 }[name] }
             }
         },test),
-        resp:test=>run("qa.get.resp",{
-            input:{
-            json:function(x){
-                return JSON.stringify({ "a":"1"})
-            },
-            path:function(){
-                return {
-                    hits:{
-                        total:10,
-                        hits:[{
-                            _score:10,
-                            _id:"1"
-                        },{
-                            _score:9,
-                            _id:"2"
-                        }]
+        resp:function(test){
+            var body={
+                hits:{
+                    total:10,
+                    hits:[{
+                        _score:10,
+                        _id:"1",
+                        _source:{
+                            questions:[{q:"1"},{q:"2"}],
+                            qid:"",
+                            card:{
+                                a:"1"
+                            }
+                        }
+                    },{
+                        _score:9,
+                        _id:"2",
+                        _source:{
+                            questions:[{q:"1"},{q:"2"}],
+                            qid:"",
+                            card:{
+                                a:"1"
+                            }
+                        }
+                    }]
+                }
+            }
+            run("qa.get.resp",{
+                input:{
+                    path:(x)=>{
+                        return JSONPath({json:body,path:x})[0]
+                    },
+                    json:(x)=>{
+                        return JSON.stringify(JSONPath({json:body,path:x})[0])
                     }
                 }
-            }}
-        },test)
+            },test)
+        }
     }
 }
 

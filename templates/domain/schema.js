@@ -2,9 +2,14 @@ module.exports={
     qid:{
         type:"keyword"
     },
-    q:{
-        type:"text",
-        analyzer:"english"
+    questions:{
+        type:"nested",
+        properties:{
+            q:{
+                type:"string",
+                analyzer:"english"
+            }
+        }
     },
     a:{
         type:"text",
@@ -12,16 +17,12 @@ module.exports={
     },
     t:{
         type:'text',
+        norms:false,
         analyzer:"whitespace" 
     },
     r:{properties:{
-        attachmentLinkUrl:{type:"keyword"},
-        buttons:{properties:{
-            text:{type:"text"},
-            value:{type:"keyword"}
-        }},
-        imageUrl:{type:"keyword"},
-        subTitle:{type:"text"},
+        url:{type:"keyword"},
+        text:{type:"text"},
         title:{type:"text"}
     }},
     l:{

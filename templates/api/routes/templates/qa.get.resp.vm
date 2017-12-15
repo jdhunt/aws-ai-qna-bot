@@ -2,6 +2,7 @@
 
 {
     "total":$inputRoot.hits.total,
+    "version":"1",
     "qa":[
         #foreach( $hit in $inputRoot.hits.hits)
             {
@@ -10,7 +11,22 @@
                 #set($Scorepath =  '$.hits.hits['+$foreach.index+']._score')
                 "score":$input.json($Scorepath),
                 #set($Bodypath =  '$.hits.hits['+$foreach.index+']._source')
-                "body":$input.json($Bodypath)
+                "body":{
+                #foreach($paramName in $input.path($Bodypath).keySet())
+                    #if( $paramName == 'questions')
+                        "q":[
+                            #foreach( $question in $input.path($Bodypath).get($paramName))
+                                "$question.q"
+                                #if($foreach.hasNext),#end
+                            #end
+                        ]
+                    #else
+                        #set( $body =  $Bodypath+"."+$paramName)
+                        "$paramName" :$input.json($body) 
+                    #end
+                #if($foreach.hasNext),#end
+                #end
+                } 
             }#if( $foreach.hasNext ),#end
         #end
     ]
