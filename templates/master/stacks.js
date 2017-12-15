@@ -16,6 +16,7 @@ module.exports={
         "Intent":   get("QnABot","Intent"),
         "Username":{"Ref":"Username"},
         "Email":{"Ref":"Email"},
+        "HandlerArn":get("QnABot","HandlerArn"),
         "PublicOrPrivate":{"Ref":"PublicOrPrivate"},
         "ApprovedDomain":{"Ref":"ApprovedDomain"},
         "ESAddress":  get('domain','ESAddress'),

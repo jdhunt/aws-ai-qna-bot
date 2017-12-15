@@ -2,8 +2,8 @@ var Promise=require('bluebird')
 var lex=require('./lex')
 var alexa=require('./alexa')
 var es=require('./es')
-var aws=require('./aws')
-var lambda= new aws.lambda()
+var aws=require('../lib/aws')
+var lambda= new aws.Lambda()
 var _=require('lodash')
 
 module.exports=class router {
