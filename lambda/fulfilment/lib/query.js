@@ -26,5 +26,6 @@ module.exports=function(req,res){
     .tap(x=>console.log("ES result:"+x))
     .then(function(result){
         res.result=result.hits.hits
+        res.message=res.result.a
     })
 }

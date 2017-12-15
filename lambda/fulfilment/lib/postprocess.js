@@ -1,6 +1,19 @@
 var aws=require('./aws')
+var lambda= new aws.lambda()
+var _=require('lodash')
 
 module.exports=function(req,res){
-    //see if l field
-        //call lambda
+    var arn=_.get(res,"result.l.arn")
+    if(arn){
+        return lambda.invoke({
+            FunctionName:arn,
+            InvocationType:"RequestResponse",
+            Payload:JSON.stringify({req,res})
+        }).promise()
+        .then(result=>{
+            var parsed=JSON.parse(result.Payload)
+            Object.assign(req,parsed.req)
+            Object.assign(res,parsed.res)
+        })
+    }
 }

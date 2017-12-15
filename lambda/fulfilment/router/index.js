@@ -2,6 +2,9 @@ var Promise=require('bluebird')
 var lex=require('./lex')
 var alexa=require('./alexa')
 var es=require('./es')
+var aws=require('./aws')
+var lambda= new aws.lambda()
+var _=require('lodash')
 
 module.exports=class router {
     constructor(){
@@ -87,13 +90,31 @@ module.exports=class router {
                     var out=alexa.assemble(response)
                     break;
             }
-            if(process.env.LAMBDA_RESPONSE){
-                //call response lambda here
-            }
-            if(process.env.LAMBDA_LOG){
-                //async call log lambda
-            }
-            callback(null,out)
+           
+            new Promise(function(resolve,reject){
+                if(process.env.LAMBDA_LOG){
+                    lambda.invoke({
+                        FunctionName:process.env.LAMBDA_LOG,
+                        InvocationType:"Event",
+                        Payload:JSON.stringify({req,res,out})
+                    }).promise().then(resolve).catch(reject)
+                }
+            })
+            .then(function(){
+                if(process.env.LAMBDA_RESPONSE){
+                    lambda.invoke({
+                        FunctionName:process.env.LAMBDA_RESPONSE,
+                        InvocationType:"RequestResponse",
+                        Payload:JSON.stringify(out)
+                    }).promise()
+                    .then(result=>{
+                        var parsed=JSON.parse(result.Payload)
+                        Object.assign(out,parsed)
+                    })
+                }
+            })
+            .then(()=>callback(null,out))
+            .catch(callback)
         }
 
         response.redirect=(req,res)=>this._walk(req,res,self.middleware.length-1)
