@@ -17,6 +17,9 @@ module.exports={
   "DependsOn": [
     "ClientLoginResourceGet",
     "DesignerLoginResourceGet",
+    "AlexaSchema",
+    "HooksGet",
+    "HooksPut",
     "QuestionsGet",
     "QuestionsPut",
     "QuestionHead",

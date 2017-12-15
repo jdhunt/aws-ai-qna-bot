@@ -11,6 +11,9 @@
         },
         "alexa":{
             "href":"$root/bot/alexa"
+        },
+        "hooks":{
+            "href":"$root/bot/hooks"
         }
     }
 }

@@ -22,5 +22,44 @@
     "FunctionName":{"Fn::GetAtt":["LexBuildLambda","Arn"]},
     "Principal": "apigateway.amazonaws.com"
   }
+},
+"LambdaAccessRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "apigateway.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "Path": "/",
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+          {"Ref":"LambdaPolicy"}
+        ]
+      }
+},
+"LambdaPolicy": {
+  "Type": "AWS::IAM::ManagedPolicy",
+  "Properties": {
+    "PolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "lambda:*"
+          ],
+          "Resource":["*"]
+        }
+      ]
+    }
+  }
 }
 }    

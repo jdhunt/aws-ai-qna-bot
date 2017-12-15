@@ -90,6 +90,9 @@
     },
     "ESType": {
       "Type": "String"
+    },
+    "HandlerArn":{
+      "Type":"String"
     }
   },
   "Conditions":{

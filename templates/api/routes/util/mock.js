@@ -11,7 +11,7 @@ module.exports=function(opts){
           "IntegrationResponses": [{
             "ResponseTemplates":{
                 "application/json":fs.readFileSync(
-                    __dirname+"/../templates/"+opts.template+".vm",
+                    __dirname+"/../"+opts.template+".vm",
                     "utf8"
                 )
             },

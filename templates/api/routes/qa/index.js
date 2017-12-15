@@ -1,5 +1,5 @@
-var resource=require('./util/resource')
-var lambda=require('./util/lambda')
+var resource=require('../util/resource')
+var lambda=require('../util/lambda')
 var fs=require('fs')
 
 module.exports={
@@ -8,8 +8,8 @@ module.exports={
     authorization:"AWS_IAM",
     method:"get",
     lambda:{"Fn::GetAtt":["ESProxyLambda","Arn"]},
-    template:fs.readFileSync(__dirname+'/templates/qa.get.vm','utf8'),
-    responseTemplate:fs.readFileSync(__dirname+'/templates/qa.get.resp.vm','utf8'),
+    template:fs.readFileSync(__dirname+'/single/get.vm','utf8'),
+    responseTemplate:fs.readFileSync(__dirname+'/single/get.resp.vm','utf8'),
     resource:{"Ref":"Questions"},
     parameterLocations:{
       "method.request.querystring.query": false,
@@ -24,8 +24,8 @@ module.exports={
     authorization:"AWS_IAM",
     method:"put",
     lambda:{"Fn::GetAtt":["ESProxyLambda","Arn"]},
-    template:fs.readFileSync(__dirname+'/templates/qas.put.vm','utf8'),
-    responseTemplate:fs.readFileSync(__dirname+'/templates/qas.put.resp.vm','utf8'),
+    template:fs.readFileSync(__dirname+'/collection/put.vm','utf8'),
+    responseTemplate:fs.readFileSync(__dirname+'/collection/put.resp.vm','utf8'),
     resource:{"Ref":"Questions"}
 }),
 "Question": resource('{ID}',{"Ref":"Questions"}),
@@ -37,8 +37,8 @@ module.exports={
         "StatusCode":404
     }],
     lambda:{"Fn::GetAtt":["ESProxyLambda","Arn"]},
-    template:fs.readFileSync(__dirname+'/templates/qa.head.vm','utf8'),
-    responseTemplate:fs.readFileSync(__dirname+'/templates/qa.head.resp.vm','utf8'),
+    template:fs.readFileSync(__dirname+'/single/head.vm','utf8'),
+    responseTemplate:fs.readFileSync(__dirname+'/single/head.resp.vm','utf8'),
     resource:{"Ref":"Question"},
     parameterLocations:{
       "method.request.path.Id": true
@@ -48,8 +48,8 @@ module.exports={
     authorization:"AWS_IAM",
     method:"put",
     lambda:{"Fn::GetAtt":["ESProxyLambda","Arn"]},
-    template:fs.readFileSync(__dirname+'/templates/qa.put.vm','utf8'),
-    responseTemplate:fs.readFileSync(__dirname+'/templates/qa.put.resp.vm','utf8'),
+    template:fs.readFileSync(__dirname+'/single/put.vm','utf8'),
+    responseTemplate:fs.readFileSync(__dirname+'/single/put.resp.vm','utf8'),
     resource:{"Ref":"Question"},
     parameterLocations:{
       "method.request.path.Id": true
@@ -59,8 +59,8 @@ module.exports={
     authorization:"AWS_IAM",
     method:"delete",
     lambda:{"Fn::GetAtt":["ESProxyLambda","Arn"]},
-    template:fs.readFileSync(__dirname+'/templates/qa.delete.vm','utf8'),
-    responseTemplate:fs.readFileSync(__dirname+'/templates/qa.delete.resp.vm','utf8'),
+    template:fs.readFileSync(__dirname+'/single/delete.vm','utf8'),
+    responseTemplate:fs.readFileSync(__dirname+'/single/delete.resp.vm','utf8'),
     resource:{"Ref":"Question"},
     parameterLocations:{
       "method.request.path.Id": true
