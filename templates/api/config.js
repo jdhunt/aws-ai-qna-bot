@@ -20,6 +20,7 @@ module.exports={
     "AlexaSchema",
     "HooksGet",
     "HooksPut",
+    "HooksOptions",
     "QuestionsGet",
     "QuestionsPut",
     "QuestionHead",

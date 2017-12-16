@@ -17,6 +17,11 @@ module.exports={
     response:fs.readFileSync(__dirname+'/config.get.vm','utf8'),
     request:fs.readFileSync(__dirname+'/config.put.vm','utf8')
 }),
+"HooksOptions":mock({
+    method:"OPTIONS",
+    template:"bot/config.options",
+    resource:{"Ref":"Hooks"}
+}),
 "AlexaSchema":mock({
     method:"GET",
     template:"bot/alexa",

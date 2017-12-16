@@ -1,7 +1,6 @@
 #set($inputRoot = $input.path('$'))
 #set($vars=[
     {"name":"LAMBDA_PREPROCESS","value":$inputRoot.get('preprocess')},
-    {"name":"LAMBDA_POSTPROCESS","value":$inputRoot.get('postprocess')},
     {"name":"LAMBDA_RESPONSE","value":$inputRoot.get('response')},
     {"name":"LAMBDA_LOG","value":$inputRoot.get('log')}
 ])

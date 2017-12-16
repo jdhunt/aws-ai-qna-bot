@@ -4,6 +4,7 @@ var Velocity=require('velocity')
 var JSONPath = require('JSONPath');
 var run=require('../util/temp-test').run
 var input=require('../util/temp-test').input
+
 module.exports={
     alexa:test=>run("alexa",{},test),
     get:test=>run("get",{},test),
@@ -27,7 +28,8 @@ module.exports={
         put:test=>run("config.put",input({
             preprocess:"ar",
             log:"ad"
-        }),test)
+        }),test),
+        options:test=>run("config.options",{},test)
     },
     utterance:{
         get:test=>run("utterance.get",{},test),

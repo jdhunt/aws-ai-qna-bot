@@ -1,7 +1,6 @@
 #set($inputRoot = $input.path('$'))
 #set($vars=[
     {"name":"preprocess","value":$inputRoot.Environment.get('LAMBDA_PREPROCESS')},
-    {"name":"postprocess","value":$inputRoot.Environment.get('LAMBDA_POSTPROCESS')},
     {"name":"response","value":$inputRoot.Environment.get('LAMBDA_RESPONSE')},
     {"name":"log","value":$inputRoot.Environment.get('LAMBDA_LOG')}
 ])

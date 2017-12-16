@@ -10,11 +10,15 @@ module.exports={
                 q:{
                     title:"Questions",
                     type:"array",
-                    items:{type:"string"}
+                    items:{
+                        type:"string",
+                        maxLength:140
+                    }
                 },
                 a:{
                     type:"string",
-                    title:"Anwser"
+                    title:"Anwser",
+                    maxLength:8000,
                 },
                 t:{
                     type:"string",
@@ -26,15 +30,18 @@ module.exports={
                     properties:{
                         title:{
                             type:"string",
-                            title:"Card Title"
+                            title:"Card Title",
+                            maxLength:1000
                         },
                         text:{
                             type:"string",
-                            title:"Card Text"
+                            title:"Card Text",
+                            maxLength:5000
                         },
                         url:{
                             type:"string",
-                            title:"Card Image Url"
+                            title:"Card Image Url",
+                            maxLength:2000
                         }
                     }
                 },

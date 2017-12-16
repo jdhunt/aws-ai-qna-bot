@@ -1,9 +1,10 @@
 var _=require('lodash')
 exports.parse=function(event){
     var out={
-        _type:"LEX",
+        _type:"ALEXA",
         original:event,
-        session:_.get(event,'session.attributes',{})
+        session:_.get(event,'session.attributes',{}),
+        channel:null,
     }
 
     switch(_.get(event,"request.type")){
@@ -70,27 +71,28 @@ exports.parse=function(event){
     }
     return out
 }
-exports.assemble=function(request){
+exports.assemble=function(response){
     return {
         version:'1.0',
         response:_.pickBy({
-            outputSpeech:{
-                type:request.type,
-                text:request.message
-            },
+            outputSpeech:_.pickBy({
+                type:response.type,
+                text:response.type==='Plaintext' ? response.message : null,
+                ssml:response.type==='SSML' ? response.message : null,
+            }),
             shouldEndSession:false,
             card:isCard(response.card) ? _.pickBy({
-                type:request.card.url ? "Simple" : "Standard",
-                title:request.card.title,
-                content:request.card.url ? request.card.text : null,
-                text:request.card.url ? request.card.text : null,
-                image:request.card.url ? {
-                    smallImageUrl:request.card.url,
-                    largeImageUrl:request.card.url
+                type:response.card.url ? "Simple" : "Standard",
+                title:response.card.title,
+                content:response.card.url ? response.card.text : null,
+                text:response.card.url ? response.card.text : null,
+                image:response.card.url ? {
+                    smallImageUrl:response.card.url,
+                    largeImageUrl:response.card.url
                 } : null
             }) : null
         }),
-        sessionAttributes:_.get(request,'session',{})
+        sessionAttributes:_.get(response,'session',{})
     }
 }
 
