@@ -25,6 +25,7 @@ module.exports={
     "QuestionHead",
     "QuestionPut",
     "QuestionDelete",
+    "QuestionsDelete",
     "BotPost",
     "BotGet",
     "UtterancesGet",

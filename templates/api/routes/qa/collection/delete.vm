@@ -1,0 +1,31 @@
+{
+    "endpoint":"$stageVariables.ESEndpoint",
+    "method":"DELETE",
+#if($input.path('$.query'))
+    "path":"/$stageVariables.ESIndex/$stageVariables.ESType/_delete_by_query",
+    "body":{
+        "query":{
+            "match":{
+                "bool":{
+                    "must":{"match_all":{}},
+                    "filter":{"regexp":{
+                        "qid":"$input.path('$.query')"
+                    }}
+                }
+            }
+        }
+    }
+#else
+    "path":"//$stageVariables.ESType/_bulk",
+    "body":[
+        #foreach($qid in $input.path('$.list'))
+        { "delete":{
+            "_index":"$stageVariables.ESIndex", 
+            "_type" :"$stageVariables.ESType",
+            "_id" : "$qid" } }#if($foreach.hasNext),#end
+        #end
+    ]
+#end
+}
+
+

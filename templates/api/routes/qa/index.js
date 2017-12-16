@@ -20,6 +20,14 @@ module.exports={
       "method.request.querystring.perpage":false,
     }
 }),
+"QuestionsDelete":lambda({
+    authorization:"AWS_IAM",
+    method:"delete",
+    lambda:{"Fn::GetAtt":["ESProxyLambda","Arn"]},
+    template:fs.readFileSync(__dirname+'/collection/delete.vm','utf8'),
+    responseTemplate:fs.readFileSync(__dirname+'/collection/delete.resp.vm','utf8'),
+    resource:{"Ref":"Questions"}
+}),
 "QuestionsPut":lambda({
     authorization:"AWS_IAM",
     method:"put",
