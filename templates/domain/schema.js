@@ -1,4 +1,51 @@
 module.exports={
+    _meta:{
+        schema:{
+            type:"object",
+            properties:{
+                qid:{
+                    type:"string",
+                    title:"Question Id"
+                },
+                q:{
+                    title:"Questions",
+                    type:"array",
+                    items:{type:"string"}
+                },
+                a:{
+                    type:"string",
+                    title:"Anwser"
+                },
+                t:{
+                    type:"string",
+                    title:"Topic"
+                },
+                r:{
+                    title:"Response card",
+                    type:"object",
+                    properties:{
+                        title:{
+                            type:"string",
+                            title:"Card Title"
+                        },
+                        text:{
+                            type:"string",
+                            title:"Card Text"
+                        },
+                        url:{
+                            type:"string",
+                            title:"Card Image Url"
+                        }
+                    }
+                },
+                l:{
+                    type:"string",
+                    title:"Lambda Hook"
+                }
+            },
+            required:["qid","q","a"]
+        }
+    },
     qid:{
         type:"keyword"
     },
@@ -20,15 +67,17 @@ module.exports={
         norms:false,
         analyzer:"whitespace" 
     },
-    r:{properties:{
-        url:{type:"keyword"},
-        text:{type:"text"},
-        title:{type:"text"}
-    }},
-    l:{
+    r:{
+        enabled:false,
         properties:{
-            Arn:{type:"keyword"}
+            url:{type:"keyword"},
+            text:{type:"text"},
+            title:{type:"text"}
         }
+    },
+    l:{
+        enabled:false,
+        type:"keyword"
     }
 }
                 

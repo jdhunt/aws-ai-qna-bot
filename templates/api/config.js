@@ -5,7 +5,7 @@ module.exports={
     "Name": {"Ref": "AWS::StackName"},
     "Description":"An Api interface for the admin actions on the QNA bot"
   },
-  "DependsOn": ["InvokePermissionESProxy","InvokePermissionLexProxy","InvokePermissionLexBuild" ]
+  "DependsOn": ["InvokePermissionESProxy","InvokePermissionLexProxy","InvokePermissionLexBuild","InvokePermissionSchema"]
 },
 "Deployment": {
   "Type": "AWS::ApiGateway::Deployment",
@@ -24,6 +24,7 @@ module.exports={
     "QuestionsPut",
     "QuestionHead",
     "QuestionPut",
+    "QuestionsOptions",
     "QuestionDelete",
     "QuestionsDelete",
     "BotPost",

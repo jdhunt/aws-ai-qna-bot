@@ -2,7 +2,8 @@ var resource=require('../util/resource')
 var lambda=require('../util/lambda')
 var fs=require('fs')
 
-module.exports={
+module.exports=Object.assign(
+require('./schema'),{
 "Questions": resource('questions'),
 "QuestionsGet":lambda({
     authorization:"AWS_IAM",
@@ -63,6 +64,13 @@ module.exports={
       "method.request.path.Id": true
     }
 }),
+"QuestionsOptions":lambda({
+    authorization:"AWS_IAM",
+    method:"options",
+    lambda:{"Fn::GetAtt":["SchemaLambda","Arn"]},
+    template:fs.readFileSync(__dirname+'/single/options.vm','utf8'),
+    resource:{"Ref":"Questions"}
+}),
 "QuestionDelete":lambda({
     authorization:"AWS_IAM",
     method:"delete",
@@ -74,4 +82,4 @@ module.exports={
       "method.request.path.Id": true
     }
 })
-}
+})

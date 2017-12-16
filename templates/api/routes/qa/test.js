@@ -47,6 +47,11 @@ module.exports={
         }
     },
     collection:{
+        options:{
+            send:function(test){
+                run("single/options",input({}),test)
+            }
+        },
         delete:{
             sendQuery:function(test){
                 var body={query:".*"}

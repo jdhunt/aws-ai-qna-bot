@@ -23,6 +23,14 @@
     "Principal": "apigateway.amazonaws.com"
   }
 },
+"InvokePermissionSchema": {
+  "Type": "AWS::Lambda::Permission",
+  "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName":{"Fn::GetAtt":["SchemaLambda","Arn"]},
+    "Principal": "apigateway.amazonaws.com"
+  }
+},
 "LambdaAccessRole": {
       "Type": "AWS::IAM::Role",
       "Properties": {

@@ -1,0 +1,6 @@
+{
+    "endpoint":"$stageVariables.ESEndpoint",
+    "method":"POST",
+    "path":"/$stageVariables.ESIndex/_mapping/$stageVariables.ESType"
+}
+
