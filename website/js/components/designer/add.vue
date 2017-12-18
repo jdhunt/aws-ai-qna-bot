@@ -93,9 +93,12 @@ module.exports={
             self.loading=false
             self.dialog=true
           }else{
-            return self.$store.dispatch('data/add',Object.assign({},self.data))
-            .tap(()=>self.success='Success!')
-            .then(()=>self.$store.commit('data/addQA',Object.assign({},self.data)))
+            return self.$store.dispatch('data/add',_.cloneDeep(self.data))
+            .then(function(){
+              self.success='Success!'
+              self.$store.commit('data/addQA',_.cloneDeep(self.data))
+              self.reset()
+            })
           }
         })
         .catch(error=>self.error=error)

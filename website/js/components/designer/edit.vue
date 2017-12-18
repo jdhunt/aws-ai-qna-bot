@@ -100,7 +100,7 @@ module.exports={
         .then(function(){
           return self.$store.dispatch('data/update',self.tmp)
           .then(function(result){
-            Object.assign(self.data,self.tmp)
+            self.$emit('update:data',_.coneDeep(self.tmp))
             self.success="!success"
           })
         })

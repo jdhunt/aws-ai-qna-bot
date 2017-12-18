@@ -61,7 +61,7 @@
             b {{props.item.qid}}
           td.text-xs-left.title {{props.item.q[0]}}
           span.buttons
-            edit(:data="props.item" @click.native.stop="")
+            edit(:data.sync="props.item" @click.native.stop="")
             delete( :data="props.item" @click.native.stop="")
       template(slot="no-data")
         v-alert( :value="true" color="error" icon="warning")
