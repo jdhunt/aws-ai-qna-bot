@@ -72,6 +72,7 @@ module.exports=class router {
         var response={
             type:"plaintext",
             message:"",
+            session:_.cloneDeep(request.session),
             card:{
                 send:false,
                 title:"",
@@ -112,7 +113,7 @@ module.exports=class router {
                         Payload:JSON.stringify(out)
                     }).promise()
                     .then(result=>{
-                        out=JSON.parse(result.Payload)
+                        _.merge(out,JSON.parse(result.Payload))
                     })
                 }
             })

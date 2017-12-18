@@ -10,21 +10,26 @@ or in the "license" file accompanying this file. This file is distributed on an 
 BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, express or implied. See the
 License for the specific language governing permissions and limitations under the License.
 */
-var Validator = require('jsonschema').Validator;
-var v = new Validator();
 var lambda=require('../bin/lambda.js')
 var env=require('../../../bin/exports')()
 var Promise=require('bluebird')
-var lexSchema=require('./lex/schema')
-var alexaSchema=require('./alexa/schema')
 var _=require('lodash')
+
+var Ajv=require('ajv')
+var ajv=new Ajv()
+var lexSchema=ajv.compile(require('./lex/schema'))
+var alexaSchema=ajv.compile(require('./alexa/schema'))
+
 
 var run=function(params,schema,test){
     return lambda(params)
         .tap(msg=>console.log(JSON.stringify(msg)))
         .tapCatch(msg=>console.log(JSON.stringify(msg)))
         .tap(test.ok)
-        //.tap(x=>v.validate(x,schema))
+        .tap(function(x){
+            var v=schema(x)
+            test.ok(v,JSON.stringify(schema.errors,null,2))
+        })
         .catch(test.ifError)
         .finally(test.done)
 }
@@ -74,7 +79,7 @@ module.exports={
             run(require('./alexa/cancel'),alexaSchema,test)
         },
         end:function(test){
-            run(require('./alexa/end'),{},test)
+            run(require('./alexa/end'),ajv.compile({}),test)
         }
     }
 }

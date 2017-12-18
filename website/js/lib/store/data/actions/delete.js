@@ -35,5 +35,29 @@ module.exports={
       }else{
         return Promise.resolve()
       } 
+    },
+    removeQAs(context,QAs){
+        var qids=QAs.map(x=>x.qid)
+        return new Promise(function(res,rej){
+            if(qids.length>0){
+                return api(context,'removeBulk',qids)
+            }
+        })
+        .tap(()=>context.state.QAs=context.state.QAs.filter(x=>qids.includes(x)))
+        .then(()=>context.commit('page/decrementTotal',qids.length,{root:true}))
+        .tapCatch(e=>console.log('Error:',e))
+        .catchThrow('Failed to remove')
+    },
+    removeFilter(context){
+        var filter=context.state.filter ? context.state.filter+".*" : ".*"
+
+        return api(context,'removeQuery',filter)
+        .tap(()=>{
+            context.commit('clearQA')
+            context.commit('clearFilter')
+            return context.dispatch('get',{})
+        })
+        .tapCatch(e=>console.log('Error:',e))
+        .catchThrow('Failed to remove')
     }
 }

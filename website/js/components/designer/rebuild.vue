@@ -1,6 +1,6 @@
 <template lang="pug">
   span(class="wrapper")
-    v-btn(:disabled="loading" @click="build" slot="activator" flat ) Rebuild Bot
+    v-btn.block(:disabled="loading" @click="build" slot="activator" flat ) Lex Rebuild
     v-dialog(
       persistent
       v-model="snackbar"

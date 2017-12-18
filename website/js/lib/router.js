@@ -20,9 +20,17 @@ module.exports={
             name:"alexa",
             component:require('../components/alexa/index.vue')
         },
-        {   path:'/import-export',
-            name:"import-export",
-            component:require('../components/import-export.vue')
+        {   path:'/hooks',
+            name:"hooks",
+            component:require('../components/hooks/index.vue')
+        },
+        {   path:'/import',
+            name:"import",
+            component:require('../components/import.vue')
+        },
+        {   path:'/export',
+            name:"export",
+            component:require('../components/export.vue')
         },
         {   path:'/edit',
             name:"edit",

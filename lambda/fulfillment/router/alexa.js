@@ -41,18 +41,15 @@ exports.parse=function(event){
                 }
             })
             break;
-        case "AMAZON.HelpIntent":
-            out.question="help"
-            break;
         case "AMAZON.RepeatIntent":
             throw new Respond({
                 version:'1.0',
                 response:{
                     outputSpeech:{
                         type:"PlainText",
-                        text:_.get(out,"session.previous.answer","Sorry, i do not remober")
+                        text:_.get(out,"session.previous.a","Sorry, i do not remober")
                     },
-                    shouldEndSession:true
+                    shouldEndSession:false
                 }
             })
             break;
@@ -74,13 +71,12 @@ exports.parse=function(event){
 exports.assemble=function(response){
     return {
         version:'1.0',
-        response:_.pickBy({
+        response:_.merge(_.pickBy({
             outputSpeech:_.pickBy({
                 type:response.type,
-                text:response.type==='Plaintext' ? response.message : null,
+                text:response.type==='PlainText' ? response.message : null,
                 ssml:response.type==='SSML' ? response.message : null,
             }),
-            shouldEndSession:false,
             card:isCard(response.card) ? _.pickBy({
                 type:response.card.url ? "Simple" : "Standard",
                 title:response.card.title,
@@ -92,6 +88,8 @@ exports.assemble=function(response){
                 } : null
             }) : null
         }),
+            {shouldEndSession:false}
+        ),
         sessionAttributes:_.get(response,'session',{})
     }
 }

@@ -1,5 +1,5 @@
 var aws=require('./aws')
-var lambda= new aws.lambda()
+var lambda= new aws.Lambda()
 var _=require('lodash')
 
 module.exports=function(req,res){
@@ -11,8 +11,8 @@ module.exports=function(req,res){
         }).promise()
         .then(result=>{
             var parsed=JSON.parse(result.Payload)
-            req=parsed.req
-            res=parsed.res
+            _.merge(req,parsed.req)
+            _.merge(res,parsed.res)
         })
     }
 }

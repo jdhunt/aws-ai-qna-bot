@@ -1,21 +1,20 @@
 <template lang="pug">
   span
     span(v-if="schema.type==='string' && !empty")
-      v-container
+      v-container.pa-0
         v-layout(:row="row" :column="column")
           v-flex
             .title {{schema.title}}
-            p {{value}} 
+            span.pl-3 {{value}} 
     span(v-if="schema.type==='array' && !empty")
       v-container
-        v-layout(:row="row" :column="column")
+        v-layout(:row="row" :column="column" )
           v-flex
             .title {{schema.title}}
-            ul 
-              li(v-for="(item,index) in value" :key="index")
-                display(  
-                  :schema="schema.items"
-                  :value="item" )
+            display(  
+              v-for="(item,index) in value" :key="index"
+              :schema="schema.items"
+              :value="item" )
     span(v-if="schema.type==='object' && !empty")
       v-container
         v-layout(:row="row" :column="column")
@@ -26,7 +25,7 @@
               column
               :schema="schema.properties[key]"
               :value="value[key]" 
-          )
+            )
 </template>
 
 <script>
@@ -91,7 +90,4 @@ module.exports={
 </script>
 
 <style lang='scss' scoped>
-  ul {
-    list-style:none;
-  }
 </style>

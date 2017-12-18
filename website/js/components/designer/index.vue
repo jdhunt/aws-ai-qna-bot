@@ -23,7 +23,6 @@
           test
     v-divider
     v-data-table(
-      v-if="total"
       :headers="headers"
       :items="QAs"
       :search="search"
@@ -39,7 +38,7 @@
         tr
           th.shrink(v-if="tab==='questions'")
             v-checkbox(:indeterminate="QAs.length===0" v-model='selectAll' tabindex='-1'
-              color="primary" 
+              color="primary" @change="toggleSelectAll"
             )
           th.shrink.title(v-if="tab==='test'") score
           th.text-xs-left.title( v-for="header in props.headers" 
@@ -49,18 +48,21 @@
               v-icon(v-if="tab==='questions' && header.sortable") arrow_upward
               span {{header.text}}
           span.buttons
-            v-btn( icon @click.native.stop="" v-if="selectAll || selectedMultiple")
-              v-icon delete
+            span(v-if="selectAll | selectedMultiple")
+              delete(:selectAll="selectAll" :selected="selected")
       template(slot='items' slot-scope='props')
         tr( v-on:click="props.expanded = !props.expanded")
           td.shrink(v-on:click.stop="" v-if="tab==='questions'")
-            v-checkbox(v-model="props.item.select" tabindex='-1' color="primary" )
+            v-checkbox(@change="checkSelect"
+              v-model="props.item.select" tabindex='-1' color="primary" 
+            )
           td.text-xs-left.shrink.primary--text.title(v-if="tab==='test'") {{props.item._score}}
-          td.text-xs-left.shrink.title {{props.item.qid}}
-          td.text-xs-left {{props.item.q[0]}}
+          td.text-xs-left.shrink.title 
+            b {{props.item.qid}}
+          td.text-xs-left.title {{props.item.q[0]}}
           span.buttons
             edit(:data="props.item" @click.native.stop="")
-            delete( icon=true :data="props.item" @click.native.stop="")
+            delete( :data="props.item" @click.native.stop="")
       template(slot="no-data")
         v-alert( :value="true" color="error" icon="warning")
             span Sorry, nothing to display here :(
@@ -94,11 +96,11 @@ module.exports={
     selected:[],
     selectAll:false,
     perpage:[
-      "5","10","15"
+      "5","10","15","50","100"
     ],
     pagination:{
       page:1,
-      rowsPerPage:10,
+      rowsPerPage:"10",
       sortBy:'qid'
     },
     headers:[{
@@ -120,7 +122,7 @@ module.exports={
     delete:require('./delete.vue'),
     edit:require('./edit.vue'),
     build:require('./rebuild.vue'),
-    alexa:require('./alexa.vue')
+    alexa:require('./alexa.vue'),
   },
   computed:{
     loading:function(){
@@ -153,13 +155,11 @@ module.exports={
     },
     pagination:function(event){
       return this.get(event)      
-    },
-    selectAll:function(value){
-      this.$store.commit('data/selectAll',value)
     }
   },
   methods:{
     get:function(event){
+      this.selectAll=false
       return this.$store.dispatch('data/get',{
         page:event.page-1,
         perpage:event.rowsPerPage,
@@ -177,6 +177,13 @@ module.exports={
         this.get(this.pagination)
       }
     },500,{trailing:false,leading:true}),
+    checkSelect:function(value){
+      this.selectAll=this.selectAll && value
+    },
+    toggleSelectAll:function(value){
+      this.$store.commit('data/selectAll',value)
+      this.selectAll=value
+    },
     edit:console.log
   }
 }

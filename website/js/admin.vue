@@ -4,7 +4,7 @@
       v-toolbar(flat)
         v-list
           v-list-tile
-            v-list-tile-title.title Pages
+            v-list-tile-title.title Tools
       v-divider
       v-list(dense three-line subheader)
         v-list-tile(v-for="(page,key) in pages" :key="key"
@@ -85,10 +85,20 @@ module.exports={
         icon:"info",
         href:"#/alexa"
       },{
-        title:"Import/Export",
-        subTitle:"import saved questions or download backups",
-        icon:"import_export",
-        href:"#import-export"
+        title:"Lambda Hooks",
+        subTitle:"Instructions for customizing QnABot behavior using AWS Lambda",
+        icon:"setting_input_compsite",
+        href:"#/hooks"
+      },{
+        title:"Import",
+        subTitle:"Import new questions",
+        icon:"cloud_upload",
+        href:"#import"
+      },{
+        title:"Export",
+        subTitle:"Download backups of your QnAs",
+        icon:"file_download",
+        href:"#export"
       },{
         title:"QnABot Client",
         subTitle:"Use QnABot to interact with your bot in the browser",

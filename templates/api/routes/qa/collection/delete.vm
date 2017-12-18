@@ -1,7 +1,7 @@
 {
     "endpoint":"$stageVariables.ESEndpoint",
     "method":"DELETE",
-#if($input.path('$.query'))
+#if($input.path('$.query').length()!=0)
     "path":"/$stageVariables.ESIndex/$stageVariables.ESType/_delete_by_query",
     "body":{
         "query":{

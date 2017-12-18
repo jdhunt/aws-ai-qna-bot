@@ -13,7 +13,9 @@ License for the specific language governing permissions and limitations under th
 var lib='./lib/'
 var router=new (require('./router'))()
 
+router.add(require(lib+'preprocess'))
 router.add(require(lib+'query'))
+router.add(require(lib+'postprocess'))
 
 exports.handler=function(event,context,callback){
     router.start(event,callback)

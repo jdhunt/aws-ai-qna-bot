@@ -48,9 +48,9 @@
           "Statement": [{
               "Effect": "Allow",
               "Action": [
-                "lambda:InvokeFunction"
+                "lambda:Invoke"
               ],
-              "Resource": [{"Fn::GetAtt":["HandlerLambda","Arn"]}]
+              "Resource":"arn:aws:lambda:*:*:function:qna-*" 
             }]
         },
         "Roles": [{"Ref": "LambdaRole"}]

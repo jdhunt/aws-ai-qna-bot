@@ -1,6 +1,6 @@
 <template lang="pug">
   v-dialog(v-model='dialog' max-width='50%')
-    v-btn(flat slot="activator" @click='open') Alexa instructions
+    v-btn.block(flat slot="activator" @click='open') Alexa Update
     v-card
       v-card-title(primary-title)
         .headline Re-configure Alexa

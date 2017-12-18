@@ -72,6 +72,7 @@ module.exports={
         }))
         .get('data')
         .tap(()=>context.commit('loading',false))
+        .tapCatch(()=>context.commit('loading',false))
     },
     botinfo(context){
         return context.dispatch('_request',{
@@ -146,6 +147,22 @@ module.exports={
             url:context.rootState.info._links.questions.href+'/'+qid,
             method:'delete',
             reason:'failed to delete'
+        })
+    },
+    removeBulk(context,list){
+        return context.dispatch('_request',{
+            url:context.rootState.info._links.questions.href,
+            method:'delete',
+            reason:'failed to delete',
+            body:{list:list}
+        })
+    },
+    removeQuery(context,query){
+        return context.dispatch('_request',{
+            url:context.rootState.info._links.questions.href,
+            method:'delete',
+            reason:'failed to delete',
+            body:{query:query}
         })
     },
     build(context){

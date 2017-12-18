@@ -61,6 +61,7 @@ module.exports={
                 run("collection/delete",input(body),test)
             },
             resp:test=>run("collection/delete.resp",input({
+                deleted:100
             }),test),
         },
         puts:{
