@@ -1,8 +1,8 @@
 <template lang="pug">
   span(class="wrapper")
     v-btn(:disabled="loading" @click="build" slot="activator" flat ) Rebuild Bot
-    v-snackbar(
-      top
+    v-dialog(
+      persistent
       v-model="snackbar"
     )
       v-card
@@ -13,7 +13,7 @@
           v-progress-linear(v-if='!error && !success' indeterminate)
         v-card-actions
           v-spacer
-            v-btn(@click='cancel' flat) close
+          v-btn(@click='cancel' flat) close
 </template>
 
 <script>
@@ -46,13 +46,14 @@ module.exports={
   computed:{},
   methods:{
     cancel:function(){
+      var self=this
       self.success=false
       self.snackbar=false
     },
     build:function(){
       var self=this
       this.loading=true
-      
+      this.snackbar=true 
       this.$store.dispatch('data/build')
       .then(function(){
         self.success=true
