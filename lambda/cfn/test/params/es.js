@@ -20,8 +20,11 @@ var setup=cfExports.then(function(exports){
     return {
         Address:exports["QNA-DEV-ES-ADDRESS"],
         Index:'test-index',
-        Name:'test-index',
+        Name:'test-index-2',
         Type:{    
+            _meta:{
+                test:"a"
+            },
             properties:{
                 qid:{type:"keyword"}
             }

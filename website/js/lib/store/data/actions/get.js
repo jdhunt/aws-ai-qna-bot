@@ -18,6 +18,10 @@ var util=require('./util')
 var api=util.api
 
 module.exports={
+    schema(context){
+        return api(context,'schema')
+        .then(x=>context.commit('schema',x))
+    },
     botinfo(context){
         return api(context,'botinfo')
         .then(function(data){

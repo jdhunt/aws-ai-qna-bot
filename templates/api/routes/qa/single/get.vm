@@ -26,19 +26,25 @@
                 #end
 
             "bool": {
-                "should": [
-                  {
+                "should": [{
                     "multi_match": {
+                        "query": "$util.urlDecode($input.params('query'))",
+                        "fields" : ["a"]
+                    }},
+                    {"multi_match": {
                         "query": "$topic",
                         "fields" : ["t"]
-                    }
-                  },
-                  {                  
-                    "multi_match": {
-                        "query":"$util.urlDecode($input.params('query'))",
-                        "fields" : ["q^2","a"]
-                    }
-                  }
+                    }},
+                    {"nested":{  
+                        "path":"questions",
+                        "score_mode":"max",
+                        "boost":2,
+                        "query":{  
+                            "match":{  
+                                "questions.q":"$util.urlDecode($input.params('query'))"
+                            }
+                        }
+                    }} 
                 ]
             }
             #end

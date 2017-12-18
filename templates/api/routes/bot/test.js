@@ -8,11 +8,21 @@ var input=require('../util/temp-test').input
 module.exports={
     alexa:test=>run("alexa",{},test),
     get:test=>run("get",{},test),
-    getresp:test=>run("get.resp",{
-        input:{path:function(){
-            return {status:'BUILDING'}
-        }}
-    },test),
+    getresp:test=>run("get.resp",input({
+        status:'BUILDING',
+        abortStatement:{
+            messages:[
+                {content:"2"},
+                {content:"3"}
+            ]
+        },
+        clarificationPrompt:{
+            messages:[
+                {content:"1"},
+                {content:"4"},
+            ]
+        }
+    }),test),
     post:test=>run("post",{},test),
     resp:test=>run("post.resp",{},test),
     lambda:{

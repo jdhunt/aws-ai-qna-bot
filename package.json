@@ -41,6 +41,7 @@
   "dependencies": {
     "JSONPath": "^0.11.2",
     "ajax-promise": "^0.8.1",
+    "ajv": "^5.5.2",
     "amazon-cognito-identity-js": "^1.19.0",
     "autosize": "^3.0.21",
     "aws-api-gateway-client": "^0.2.7",

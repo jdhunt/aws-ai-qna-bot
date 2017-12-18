@@ -6,12 +6,9 @@
     "qa":[
         #foreach( $hit in $inputRoot.hits.hits)
             {
-                #set($Idpath =  '$.hits.hits['+$foreach.index+']._id')
-                "id":$input.json($Idpath),
                 #set($Scorepath =  '$.hits.hits['+$foreach.index+']._score')
-                "score":$input.json($Scorepath),
+                "_score":$input.json($Scorepath),
                 #set($Bodypath =  '$.hits.hits['+$foreach.index+']._source')
-                "body":{
                 #foreach($paramName in $input.path($Bodypath).keySet())
                     #if( $paramName == 'questions')
                         "q":[
@@ -26,7 +23,6 @@
                     #end
                 #if($foreach.hasNext),#end
                 #end
-                } 
             }#if( $foreach.hasNext ),#end
         #end
     ]

@@ -7,9 +7,7 @@ module.exports={
             "Address":{"Fn::GetAtt":["ElasticsearchDomain","DomainEndpoint"]},
             "Index":"qna-index",
             "Name":"qna",
-            "Type":{
-                properties:require('./schema')
-            }
+            "Type":JSON.stringify(require('./schema'))
         }
     },
     "ElasticsearchDomain": {

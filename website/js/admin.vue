@@ -7,7 +7,7 @@
             v-list-tile-title.title Pages
       v-divider
       v-list(dense three-line subheader)
-        v-list-tile(v-for="page in pages" 
+        v-list-tile(v-for="(page,key) in pages" :key="key"
           @click="" 
           :href="page.href"
           :target="page.target || '_self'") 
@@ -18,7 +18,10 @@
             v-list-tile-sub-title {{page.subTitle}}
     v-toolbar(app)
       v-toolbar-side-icon(@click.stop="drawer = !drawer")
-      v-toolbar-title Designer-UI: {{username}}
+      v-toolbar-title 
+        v-breadcrumbs
+          v-breadcrumbs-item(href='#/edit') QnABot-Designer-UI:{{$store.state.user.name}}
+          v-breadcrumbs-item {{page}}
       v-spacer
       v-toolbar-items
         v-btn(flat 
@@ -55,6 +58,9 @@ module.exports={
   }},
   components:{},
   computed:{
+    page:function(){
+      return _.get(this,'$store.state.route.name','')
+    },
     error:function(){
       return this.$store.state.error
     },

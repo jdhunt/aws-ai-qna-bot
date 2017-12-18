@@ -1,24 +1,16 @@
 <template lang='pug'>
-  v-card(flat class="pl-3")
-    v-card-text
-      v-container
-        v-layout(row)
-          v-flex(xs6)
-            .title Questions
-              v-list(dense)
-                v-list-tile(v-for="(q,index) in data.q" :key="index")
-                  v-list-tile-content {{q}}
-          v-flex(xs6)
-            .title Answer
-            p(class="pl-3") {{data.a}}
-        v-layout(column)
-          span(v-if="data.t")
-            .title Topic
-            p(class="pl-3") {{data.t}}
-          span(v-if="data.r.imageUrl")
-            .title ResponseCard
-            p(class="pl-3") title: {{data.r.title}}
-            p(class="pl-3") url: {{data.r.imageUrl}}
+  v-card(flat class="pa-0")
+    display(
+      :schema="$store.state.data.schema",
+      row
+      v-model="topitems"
+    )
+    v-divider
+    display(
+      :schema="$store.state.data.schema",
+      column
+      v-model="bottomitems"
+    )
 </template>
 
 <script>
@@ -41,14 +33,29 @@ var _=require('lodash')
 module.exports={
   props:['data'],
   data:()=>{return {
-    advanced:false
+    advanced:false,
+    top:["q","a"]
   }},
   components:{
+    display:require('./display.vue')
   },
   computed:{
+    items:function(){
+      return _.omit(this.data,['qid'])
+    },
+    topitems:function(){
+      return _.pick(this.items,this.top)
+    },
+    bottomitems:function(){
+      return _.omit(this.items,this.top)
+    }
   },
   methods:{}
 }
 </script>
 
-
+<style lang='scss' scoped>
+  ul {
+    list-style:none;
+  }
+</style>

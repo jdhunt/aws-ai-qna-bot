@@ -10,7 +10,8 @@ or in the "license" file accompanying this file. This file is distributed on an 
 BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, express or implied. See the
 License for the specific language governing permissions and limitations under the License.
 */
-
+var aws=require('aws-sdk')
+aws.config.region=process.env.AWS_REGION
 
 module.exports=function(index,type,name,address){
     var con=(require('./con.js'))(address)
@@ -36,25 +37,14 @@ module.exports=function(index,type,name,address){
             var body={}
             if(!exists){
                 return es.indices.putMapping({
-                    index:index,
+                    index,
                     type:name,
-                    body:type
+                    body:JSON.parse(type)
                 })
             }
         })
+        .tapCatch(console.log)
         .tap(console.log)
     })
 }
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -48,6 +48,14 @@ module.exports={
         set(qa,'selected',false)
         state.QAs.unshift(qa)
     },
+    schema(state,schema){
+        state.schema=schema
+        state.schema.properties.qid.propertyOrder=4
+        state.schema.properties.q.propertyOrder=3
+        state.schema.properties.a.propertyOrder=2
+        state.schema.properties.t.propertyOrder=1
+        state.schema.properties.r.propertyOrder=0
+    },
     delQA(state,QA){
         var index=state.QAs.findIndex(qa=>qa.qid===QA.qid)
         state.QAs.splice(index,1)

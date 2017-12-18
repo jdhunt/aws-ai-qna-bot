@@ -94,6 +94,13 @@ module.exports={
             reason:"Failed to get Alexa info"
         })
     },
+    schema(context,body){
+        return context.dispatch('_request',{
+            url:context.rootState.info._links.questions.href,
+            method:'options',
+            reason:"Failed to get qa options"
+        })
+    },
     bulk(context,body){
         return context.dispatch('_request',{
             url:context.rootState.info._links.questions.href,
@@ -130,7 +137,7 @@ module.exports={
         return context.dispatch('_request',{
             url:context.rootState.info._links.questions.href+'/'+payload.qid,
             method:'put',
-            body:[payload],
+            body:payload,
             reason:'failed to update'
         })
     },

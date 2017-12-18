@@ -14,7 +14,7 @@
           "S3Bucket": {"Ref":"BootstrapBucket"},
           "S3Key": {"Fn::Join":["",[
             {"Ref":"BootstrapPrefix"},
-            "/lambda/handler.zip"
+            "/lambda/fulfillment.zip"
           ]]}
         },
         "Environment": {

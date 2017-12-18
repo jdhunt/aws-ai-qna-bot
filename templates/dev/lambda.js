@@ -1,12 +1,20 @@
 module.exports={
    "Description": "This template creates dev ElasticSearch Cluster",
    "Resources":{
+    "InvokePermission": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName":{"Fn::GetAtt":["Lambda","Arn"]},
+        "Principal":{"Ref":"AWS::AccountId"}
+      }
+    },
     "Lambda": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
             "ZipFile":{"Fn::Join":["\n",[
-                "module.exports=function(event,context,callback){",
+                "exports.handler=function(event,context,callback){",
                 "   console.log(JSON.stringify(event,null,2))",
                 "   callback(null,event)",
                 "}"

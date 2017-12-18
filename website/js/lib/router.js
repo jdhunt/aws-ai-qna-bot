@@ -17,12 +17,15 @@ module.exports={
     base:'/',
     routes:[
         {   path:'/alexa',
+            name:"alexa",
             component:require('../components/alexa/index.vue')
         },
         {   path:'/import-export',
+            name:"import-export",
             component:require('../components/import-export.vue')
         },
         {   path:'/edit',
+            name:"edit",
             component:require('../components/designer/index.vue')
         },
         {   path:'/loading',

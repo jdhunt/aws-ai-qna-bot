@@ -38,6 +38,7 @@ Vue.use(vuetify)
 var style=require('../style/app.styl')
 
 var lib=require('./lib')
+
 document.addEventListener('DOMContentLoaded',init)
 
 function init(){
