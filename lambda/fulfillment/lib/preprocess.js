@@ -3,6 +3,7 @@ var lambda= new aws.Lambda()
 var _=require('lodash')
 
 module.exports=function(req,res){
+    console.log("pre")
     if(process.env.LAMBDA_PREPROCESS){
         return lambda.invoke({
             FunctionName:process.env.LAMBDA_PREPROCESS,

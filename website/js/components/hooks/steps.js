@@ -1,12 +1,14 @@
 var stringify=require('json-stringify-pretty-compact')
 var example=stringify(require('./example'))
+var code=require('./code.txt')
 module.exports=[{
     title:"Create Lambda Function",
     text:`
-Create a lambda function with a name that starts with "qna"
-for example:
-qna-extra-special
-qna-secret-sauce
+Create a lambda function with a name that starts with "qna"  
+
+for example:  
+- qna-extra-special  
+- qna-secret-sauce  
 ...
     `
 },{
@@ -17,10 +19,7 @@ code must return its event object
 A minimal function would look like this
 
 ~~~js
-exports.handler=function(event,context,callback){
-    console.log("Input:",JSON.stringify(event,null,2))
-    callback(null,event)
-}
+${code}
 ~~~
 
 The Event context has three properties
@@ -30,7 +29,16 @@ The Event context has three properties
 ~~~json 
 ${example}
 ~~~
-`
+`,
+    buttons:[{
+        text:"Copy Code",
+        id:"code",
+        loading:false
+    },{
+        text:"Copy Example request",
+        id:"request",
+        loading:false
+    }]
 },{
     title:"Add/Edit Question",
     text:`

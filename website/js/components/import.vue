@@ -4,26 +4,35 @@
       v-flex
         v-card
           v-card-title.headline Import From Url
-          v-card-text
+          v-card-text(v-if="!dialog.url")
             v-text-field(name="url" label="Type here to import from url" id="url" clearable v-model="url")
+          v-card-text(v-if="dialog.url")
+            p Warning, This will over write existing files
           v-card-actions(v-if="!dialog.url")
             v-spacer
             v-btn(@click="dialog.url=true") from url
           v-card-actions(v-if="dialog.url")
             v-spacer
-            v-btn(@click="dialog.url=cancel") cancel
-            v-btn(@click="") continue
+            v-btn(@click="dialog.url=false") cancel
+            v-btn(@click="Geturl") continue
       v-flex
         v-card
           v-card-title.headline Import From File
-          v-card-text
+          v-card-text(v-if="dialog.file")
+            p Warning, This will over write existing files
           v-card-actions(v-if="!dialog.file")
             v-spacer
             v-btn(@click="dialog.file=true") from file
-          v-card-actions(v-if="dialog.url")
+          v-card-actions(v-if="dialog.file")
             v-spacer
-            v-btn(@click="dialog.file=cancel") cancel
-            v-btn(@click="") continue
+            input(
+              type="file" 
+              name="file"
+              id="upload-file" 
+              v-on:change="Getfile"
+              ref="file"
+            )
+            v-btn(@click="dialog.file=false") cancel
     v-dialog(v-model="loading" persistent)
       v-card
         v-card-title Loading
@@ -74,7 +83,7 @@ module.exports={
   components:{
   },
   methods:{
-    file:function(event){
+    Getfile:function(event){
       var self=this
       this.dialog.file=false
       this.loading=true
@@ -92,25 +101,27 @@ module.exports={
       })
       .then(data=>self.upload(data))
     },
-    url:function(event){
+    Geturl:function(event){
       var self=this
       this.dialog.url=false
       this.loading=true
 
       Promise.resolve(axios.get(self.url))
-      .then(x=>res(x.data))
-      .catch(x=>rej({
+      .then(x=>x.data)
+      .catch(x=>{return {
         status:x.response.status,
         message:x.response.data
-      }))
+      }})
       .then(data=>self.upload(data))
     },
     upload:function(data){
+      var self=this
       new Promise(function(res,rej){
         if(data.qna){
-          return self.$store.dispatch('api/bulk',data)
+          self.$store.dispatch('api/bulk',data)
+          .then(res).catch(rej)
         }else{
-          return Promise.reject('Invalid File')
+          rej('Invalid File')
         }
       })
       .then(()=>self.success="success!")

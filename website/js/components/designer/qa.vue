@@ -5,8 +5,9 @@
       row
       v-model="topitems"
     )
-    v-divider
+    v-divider(v-if="extra")
     display(
+      v-if="extra"
       :schema="$store.state.data.schema",
       column
       v-model="bottomitems"
@@ -40,6 +41,9 @@ module.exports={
     display:require('./display.vue')
   },
   computed:{
+    extra:function(){
+      return _.values(_.pick(this.items,this.top)).length>0
+    },
     items:function(){
       return _.omit(this.data,['qid'])
     },

@@ -39,10 +39,10 @@ module.exports={
         store.QAs.map(x=>x.select=value)
     },
     setFilter(store,query){
-        store.filter.query=query
+        store.filter=query
     },
     clearFilter(store){
-        store.filter.query=null
+        store.filter=null
     },
     addQA(state,qa){
         set(qa,'selected',false)

@@ -31,7 +31,6 @@ module.exports={
           .then(()=>context.commit('delQA',QA))
           .then(()=>context.commit('page/decrementTotal',null,{root:true}))
           .tapCatch(e=>console.log('Error:',e))
-          .catchThrow('Failed to remove')
       }else{
         return Promise.resolve()
       } 
@@ -40,18 +39,21 @@ module.exports={
         var qids=QAs.map(x=>x.qid)
         return new Promise(function(res,rej){
             if(qids.length>0){
-                return api(context,'removeBulk',qids)
+                api(context,'removeBulk',qids)
+                .then(res).catch(rej)
+            }else{
+                res()
             }
         })
-        .tap(()=>context.state.QAs=context.state.QAs.filter(x=>qids.includes(x)))
+        .tap(()=>context.state.QAs=context.state.QAs.filter(x=>!qids.includes(x.qid)))
         .then(()=>context.commit('page/decrementTotal',qids.length,{root:true}))
         .tapCatch(e=>console.log('Error:',e))
-        .catchThrow('Failed to remove')
     },
     removeFilter(context){
         var filter=context.state.filter ? context.state.filter+".*" : ".*"
 
         return api(context,'removeQuery',filter)
+        .delay(2000)
         .tap(()=>{
             context.commit('clearQA')
             context.commit('clearFilter')

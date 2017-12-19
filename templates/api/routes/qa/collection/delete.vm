@@ -1,22 +1,20 @@
 {
     "endpoint":"$stageVariables.ESEndpoint",
-    "method":"DELETE",
+    "method":"POST",
 #if($input.path('$.query').length()!=0)
     "path":"/$stageVariables.ESIndex/$stageVariables.ESType/_delete_by_query",
     "body":{
         "query":{
-            "match":{
-                "bool":{
-                    "must":{"match_all":{}},
-                    "filter":{"regexp":{
-                        "qid":"$input.path('$.query')"
-                    }}
-                }
+            "bool":{
+                "must":{"match_all":{}},
+                "filter":{"regexp":{
+                    "qid":"$input.path('$.query')"
+                }}
             }
         }
     }
 #else
-    "path":"//$stageVariables.ESType/_bulk",
+    "path":"/$stageVariables.ESIndex/$stageVariables.ESType/_bulk",
     "body":[
         #foreach($qid in $input.path('$.list'))
         { "delete":{

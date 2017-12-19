@@ -53,6 +53,12 @@ License for the specific language governing permissions and limitations under th
 var Vuex=require('vuex')
 var Promise=require('bluebird')
 var markdown=require('marked')
+
+markdown.setOptions({
+  highlight: function (code) {
+    return require('highlight.js').highlightAuto(code).value;
+  }
+});
 var renderer=new markdown.Renderer()
 renderer.link=function(href,title,text){
   return `<a href="${href}" title="${title}" target="_blank">${text}</a>` 
@@ -77,7 +83,18 @@ module.exports={
     Vuex.mapState([
         'bot'
     ]),
-    {invalid:function(){
+    {
+    code:new clipboard('#code',{
+        text:function(){
+          return require('./code.txt')
+        }
+    }),
+    request:new clipboard('#request',{
+        text:function(){
+          return JSON.stringify(require('./example.json'),null,2)
+        }
+    }),
+    invalid:function(){
       return this.$validator.errors.has('filter')
     },
     steps:function(){

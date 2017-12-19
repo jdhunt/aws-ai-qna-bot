@@ -3,7 +3,7 @@ var lambda= new aws.Lambda()
 var _=require('lodash')
 
 module.exports=function(req,res){
-    var arn=_.get(res,"result.l.arn")
+    var arn=_.get(res,"result[0]._source.l")
     console.log("Lambda PostProcess Hooks:",JSON.stringify({req,res},null,2))
     if(arn){
         return lambda.invoke({

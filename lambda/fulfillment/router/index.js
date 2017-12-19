@@ -39,11 +39,11 @@ module.exports=class router {
     }
 
     add(fnc){
-        this.middleware.push(fnc)
+        this.middleware.unshift(fnc)
     }
     
     _walk(req,res,index){
-        console.log(JSON.stringify({req,res},null,2))
+        console.log(index,this.middleware.length)
         if(index>-1){
             Promise.resolve(this.middleware[index](req,res))
             .then(()=>this._walk(req,res,--index))

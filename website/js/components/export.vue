@@ -1,6 +1,6 @@
 <template lang='pug'>
   v-container(column grid-list-md)
-    v-layout(row)
+    v-layout(column)
       v-flex
         v-card
           v-card-title.headline Export All
@@ -14,10 +14,10 @@
           v-card-title.headline Export Filtered
           v-card-text 
             v-text-field(name="filter" label="filter export by qid prefix" id="filter" clearable v-model="filter")
-            v-text-field(name="filename.filter" label="filename" id="filename.filter" clearable v-model="filename.filter")
+            v-text-field(name="filename.filter" label="filename" id="filename.filter" clearable v-model="filtername")
           v-card-actions
             v-spacer
-            v-btn(@click="download(filename.filter)") export
+            v-btn(@click="download(filtername)") export
     v-dialog(v-model="loading" persistent)
       v-card
         v-card-title Loading
@@ -60,7 +60,18 @@ module.exports={
       filter:"",
       filename:{
         filter:"qna",
-        all:"qna"
+        prefix:"qna",
+        tmp:""
+      }
+    }
+  },
+  computed:{
+    filtername:{
+      get:function(){
+        return this.filename.prefix+'-'+this.filter
+      },
+      set:function(val){
+        this.tmp=val
       }
     }
   },
@@ -83,6 +94,7 @@ module.exports={
         return Promise.resolve(saveAs(blob,name+'.json'))
       })
       .then(()=>self.loading=false)
+      .catch(err=>this.error=err)
     }
   }
 }

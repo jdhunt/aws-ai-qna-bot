@@ -48,7 +48,7 @@
           "Statement": [{
               "Effect": "Allow",
               "Action": [
-                "lambda:Invoke"
+                "lambda:InvokeFunction"
               ],
               "Resource":"arn:aws:lambda:*:*:function:qna-*" 
             }]

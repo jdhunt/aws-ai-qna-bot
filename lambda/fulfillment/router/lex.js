@@ -9,7 +9,10 @@ exports.parse=function(event){
 }
 exports.assemble=function(response){
     var out={
-        sessionAttributes:_.get(response,'session',{}),
+        sessionAttributes:_.mapValues(
+            _.get(response,'session',{}),
+            x=>_.isString(x) ? x : JSON.stringify(x)
+        ),
         dialogAction:_.pickBy({
             type:"Close",
             fulfillmentState:"Fulfilled",

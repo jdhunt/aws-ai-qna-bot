@@ -90,7 +90,10 @@ exports.assemble=function(response){
         }),
             {shouldEndSession:false}
         ),
-        sessionAttributes:_.get(response,'session',{})
+        sessionAttributes:_.mapValues(
+            _.get(response,'session',{}),
+            x=>_.isString(x) ? x : JSON.stringify(x)
+        )
     }
 }
 

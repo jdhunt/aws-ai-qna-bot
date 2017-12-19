@@ -87,7 +87,7 @@ module.exports={
       },{
         title:"Lambda Hooks",
         subTitle:"Instructions for customizing QnABot behavior using AWS Lambda",
-        icon:"setting_input_compsite",
+        icon:"settings_input_component",
         href:"#/hooks"
       },{
         title:"Import",

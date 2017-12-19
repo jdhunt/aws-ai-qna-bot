@@ -88,17 +88,16 @@ module.exports={
         if(self.selectAll){
           return self.$store
             .dispatch('data/removeFilter') 
+            .then(()=>self.selectAll=false)
             .then(res).catch(rej)
         } else { 
           self.total=self.QAs.length
           return new Promise(function(res,rej){
             if(self.QAs.length===1){
-              return self.$store
-                .dispatch('data/removeQA',self.QAs[0])
+              self.$store.dispatch('data/removeQA',self.QAs[0])
                 .then(res).catch(rej)
             }else{
-              return self.$store
-                .dispatch('data/removeQAs',self.QAs)
+              self.$store.dispatch('data/removeQAs',self.QAs)
                 .then(res).catch(rej)
             }
           })

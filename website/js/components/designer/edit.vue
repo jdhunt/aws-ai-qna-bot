@@ -100,13 +100,14 @@ module.exports={
         .then(function(){
           return self.$store.dispatch('data/update',self.tmp)
           .then(function(result){
-            self.$emit('update:data',_.coneDeep(self.tmp))
+            self.$emit('update:data',_.cloneDeep(self.tmp))
             self.success="!success"
           })
         })
         .catch(function(error){
             self.dialog=true
             self.loading=false
+            console.log(error)
             self.error=error
         })
       }

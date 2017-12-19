@@ -12,7 +12,7 @@ exports.handler = (event, context, callback) => {
     req.region =aws.config.region;
     if(event.body){
         if(Array.isArray(event.body)){
-            req.body=event.body.map(JSON.stringify).join('\n')
+            req.body=event.body.map(JSON.stringify).join('\n')+'\n'
         }else{
             req.body = JSON.stringify(event.body)
         }

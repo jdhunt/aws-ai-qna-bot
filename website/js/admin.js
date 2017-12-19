@@ -16,7 +16,7 @@ Promise.config({
     warnings:false
 })
 var Vue=require('vue')
-
+var style=require('highlight.js/styles/solarized-light.css')
 var Router=require('vue-router').default
 var sync=require('vuex-router-sync').sync
 var Vuex=require('vuex').default
